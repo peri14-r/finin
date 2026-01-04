@@ -17,31 +17,43 @@ const ThemeContext = createContext<{
 
 export const useTheme = () => useContext(ThemeContext);
 
-const AnimatedRoutes = () => {
-  const location = useLocation();
-  return (
-    <AnimatePresence mode="wait">
-      <Routes location={location} key={location.pathname}>
-        <Route path="/" element={<PageWrapper><Home /></PageWrapper>} />
-        <Route path="/about" element={<PageWrapper><About /></PageWrapper>} />
-        <Route path="/programs" element={<PageWrapper><Programs /></PageWrapper>} />
-        <Route path="/contact" element={<PageWrapper><Contact /></PageWrapper>} />
-      </Routes>
-    </AnimatePresence>
-  );
+/**
+ * Ensures scroll position is reset to top on every route change.
+ */
+const ScrollToTop = () => {
+  const { pathname } = useLocation();
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+  return null;
 };
 
 const PageWrapper = ({ children }: { children: React.ReactNode }) => {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
+      initial={{ opacity: 0, y: 15 }}
       animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -20 }}
-      transition={{ duration: 0.5, ease: "easeOut" }}
+      exit={{ opacity: 0, y: -15 }}
+      transition={{ duration: 0.4, ease: [0.23, 1, 0.32, 1] }}
       className="min-h-screen pt-20"
     >
       {children}
     </motion.div>
+  );
+};
+
+const AnimatedRoutes = () => {
+  const location = useLocation();
+  return (
+    <AnimatePresence mode="wait" initial={false}>
+      <Routes location={location} key={location.pathname}>
+        <Route path="/" element={<PageWrapper><Home /></PageWrapper>} />
+        <Route path="/about" element={<PageWrapper><About /></PageWrapper>} />
+        <Route path="/programs" element={<PageWrapper><Programs /></PageWrapper>} />
+        <Route path="/contact" element={<PageWrapper><Contact /></PageWrapper>} />
+        <Route path="*" element={<PageWrapper><Home /></PageWrapper>} />
+      </Routes>
+    </AnimatePresence>
   );
 };
 
@@ -54,6 +66,7 @@ export default function App() {
     document.documentElement.classList.toggle('dark', newTheme === 'dark');
   };
 
+  // Ensure dark mode is active by default on the root element
   useEffect(() => {
     document.documentElement.classList.add('dark');
   }, []);
@@ -61,9 +74,14 @@ export default function App() {
   return (
     <ThemeContext.Provider value={{ theme, toggleTheme }}>
       <Router>
-        <div className={`min-h-screen transition-colors duration-500 ${theme === 'dark' ? 'bg-luxuryBlack text-white' : 'bg-white text-luxuryBlack'}`}>
+        <ScrollToTop />
+        <div className={`min-h-screen flex flex-col transition-colors duration-500 ${
+          theme === 'dark' ? 'bg-luxuryBlack text-white' : 'bg-white text-luxuryBlack'
+        }`}>
           <Navbar />
-          <AnimatedRoutes />
+          <main className="flex-grow">
+            <AnimatedRoutes />
+          </main>
           <Footer />
         </div>
       </Router>
