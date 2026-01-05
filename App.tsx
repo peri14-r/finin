@@ -28,7 +28,9 @@ const ScrollToTop = () => {
   return null;
 };
 
-const PageWrapper = ({ children }: { children: React.ReactNode }) => {
+// Fix: Making children optional to resolve the "missing children" type error that occurs in some environments
+// when components are used inside JSX props like 'element'.
+const PageWrapper = ({ children }: { children?: React.ReactNode }) => {
   return (
     <motion.div
       initial={{ opacity: 0, y: 15 }}
