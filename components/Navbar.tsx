@@ -54,7 +54,7 @@ const Navbar = () => {
       <nav 
         className={`transition-all duration-300 ${
           scrolled 
-            ? 'py-3 bg-white/95 dark:bg-luxuryBlack/95 backdrop-blur-md shadow-sm' 
+            ? 'py-2.5 bg-white/95 dark:bg-luxuryBlack/95 backdrop-blur-md shadow-sm' 
             : 'py-5 bg-transparent'
         }`}
       >
@@ -62,13 +62,13 @@ const Navbar = () => {
           {/* Logo Section */}
           <div className="flex items-center">
             <Link to="/" className="hover:opacity-90 transition-opacity">
-              <Logo className="scale-100" theme={theme} />
+              <Logo className="scale-[0.95] lg:scale-100 origin-left" theme={theme} />
             </Link>
           </div>
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-6 lg:gap-10">
-            <div className="flex gap-8 lg:gap-12">
+            <div className="flex gap-8 lg:gap-10">
               {navLinks.map((link) => {
                 const isActive = location.pathname === link.path;
                 return (
@@ -97,7 +97,7 @@ const Navbar = () => {
               {/* Theme Toggle Button */}
               <button 
                 onClick={toggleTheme}
-                className={`p-2.5 rounded-full border transition-all ${scrolled ? 'border-black/5 dark:border-white/10 text-black dark:text-white hover:bg-black/5 dark:hover:bg-white/5' : (theme === 'light' ? 'border-black/10 text-black hover:bg-black/5' : 'border-white/10 text-white hover:bg-white/10')}`}
+                className={`p-2 rounded-full border transition-all ${scrolled ? 'border-black/5 dark:border-white/10 text-black dark:text-white hover:bg-black/5 dark:hover:bg-white/5' : (theme === 'light' ? 'border-black/10 text-black hover:bg-black/5' : 'border-white/10 text-white hover:bg-white/10')}`}
                 aria-label="Toggle Theme"
               >
                 <AnimatePresence mode="wait">
@@ -113,7 +113,7 @@ const Navbar = () => {
                 </AnimatePresence>
               </button>
 
-              <Link to="/contact" className="px-10 py-3.5 bg-finixRed text-white font-bebas text-xl tracking-widest rounded-sm hover:brightness-110 transition-all uppercase shadow-lg shadow-finixRed/20">
+              <Link to="/contact" className="px-8 lg:px-10 py-3 bg-finixRed text-white font-bebas text-xl tracking-widest rounded-sm hover:brightness-110 transition-all uppercase shadow-lg shadow-finixRed/20">
                 ENQUIRE
               </Link>
             </div>

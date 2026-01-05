@@ -10,15 +10,15 @@ const motion = m as any;
 const Home = () => {
   return (
     <div className="overflow-hidden bg-white dark:bg-luxuryBlack">
-      {/* 1. HERO SECTION - Refined for production stability */}
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-white dark:bg-black pt-28 pb-20 lg:py-0">
+      {/* 1. HERO SECTION - Refined to prevent overlap and fix broken assets */}
+      <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-white dark:bg-black pt-32 pb-20 lg:pt-40 lg:pb-0">
         <div className="absolute inset-0 z-0">
           <img
             src="https://images.unsplash.com/photo-1571902943202-507ec2618e8f?auto=format&fit=crop&q=80&w=1920"
             alt="Elite Gym Interior"
             className="w-full h-full object-cover brightness-[0.9] dark:brightness-[0.4]"
           />
-          <div className="absolute inset-0 bg-white/40 dark:bg-black/60" />
+          <div className="absolute inset-0 bg-white/40 dark:bg-black/65" />
         </div>
         
         {/* Decorative thin border frame */}
@@ -31,10 +31,10 @@ const Home = () => {
             initial={{ opacity: 0, x: -50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8 }}
-            className="lg:col-span-7 text-left w-full"
+            className="lg:col-span-7 text-left w-full lg:pr-10"
           >
             <p className="font-syncopate text-finixRed text-[10px] md:text-xs tracking-[0.4em] uppercase mb-6 font-bold">Build Your Dream Success</p>
-            <h1 className="font-bebas text-6xl sm:text-7xl md:text-8xl lg:text-[7.5rem] xl:text-[9rem] leading-[0.9] lg:leading-[0.82] mb-8 lg:mb-12 font-bold uppercase tracking-tight">
+            <h1 className="font-bebas text-5xl sm:text-7xl md:text-8xl lg:text-[6.5rem] xl:text-[8rem] 2xl:text-[9rem] leading-[0.95] lg:leading-[0.85] mb-8 lg:mb-12 font-bold uppercase tracking-tight">
               <span className="text-luxuryBlack dark:text-white drop-shadow-sm">BUILD YOUR</span> <br />
               <span className="text-finixRed drop-shadow-lg">DREAM SUCCESS</span>
             </h1>
@@ -57,8 +57,8 @@ const Home = () => {
             </div>
           </motion.div>
 
-          {/* Promotional Cards */}
-          <div className="lg:col-span-5 hidden md:flex flex-col sm:flex-row lg:flex-col gap-6 lg:gap-8 relative w-full">
+          {/* Promotional Cards - Using high-reliability sources */}
+          <div className="lg:col-span-5 hidden md:flex flex-col sm:flex-row lg:flex-col gap-6 lg:gap-8 relative w-full lg:mt-12">
             <motion.div
               initial={{ opacity: 0, y: 50 }}
               animate={{ opacity: 1, y: 0 }}
@@ -69,7 +69,7 @@ const Home = () => {
                 <img 
                   src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&q=80&w=800" 
                   className="w-full h-full object-cover grayscale transition-all duration-1000 group-hover:scale-110 group-hover:grayscale-0" 
-                  alt="Protocol" 
+                  alt="Transformation" 
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/20 to-transparent p-6 lg:p-10 flex flex-col justify-end">
                   <h3 className="font-bebas text-3xl lg:text-4xl text-white tracking-widest leading-none mb-2 uppercase">DON'T JUST DREAM, DO IT</h3>
@@ -86,7 +86,7 @@ const Home = () => {
             >
               <div className="relative h-48 sm:h-56 lg:h-64 rounded-2xl overflow-hidden">
                 <img 
-                  src="https://images.unsplash.com/photo-1593079831268-3381b0db4a77?auto=format&fit=crop&q=80&w=800" 
+                  src="https://images.unsplash.com/photo-1541534741688-6078c6bfb5c5?auto=format&fit=crop&q=80&w=800" 
                   className="w-full h-full object-cover transition-all duration-1000 group-hover:scale-110 group-hover:brightness-110" 
                   alt="Personal Training" 
                 />
@@ -113,7 +113,7 @@ const Home = () => {
             <span className="font-syncopate text-[10px] tracking-[0.5em] uppercase opacity-70 mb-4 block">Build Your Dream</span>
             <h2 className="font-bebas text-6xl md:text-8xl leading-none mb-8">10+ YEARS OF <br />UNDEFEATED SUCCESS</h2>
             <p className="font-jakarta text-lg mb-10 opacity-90 leading-relaxed max-w-lg mx-auto lg:mx-0">
-              It's the time to cut down your calories by taking a step to reach us. Exercising indeed makes you feel fresh and boosts your enthusiasm. Our legacy is built on thousands of transformations.
+              It's the time to cut down your calories by taking a step to reach us. Our legacy is built on thousands of transformations and decade of expertise.
             </p>
             <Link to="/contact" className="px-10 py-4 bg-white text-finixRed font-bebas text-xl tracking-widest hover:bg-black hover:text-white transition-all inline-block uppercase">JOIN US</Link>
           </motion.div>
