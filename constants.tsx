@@ -2,53 +2,38 @@
 import React from 'react';
 import { TeamMember, Program } from './types';
 
-export const Logo = ({ className = "w-10 h-10", theme = "dark" }: { className?: string, theme?: 'light' | 'dark' }) => {
-  // We'll use 'currentColor' for the primary elements so they inherit from the parent's text color.
-  // The 'accentColor' remains constant (Finix Red).
+export const Logo = ({ className = "w-auto h-12", theme = "dark" }: { className?: string, theme?: 'light' | 'dark' }) => {
   const accentColor = '#ff0000'; 
 
   return (
     <div className={`flex items-center gap-3 ${className} transition-colors duration-500 ${theme === 'dark' ? 'text-white' : 'text-luxuryBlack'}`}>
-      <div className="relative w-16 h-16 shrink-0 flex items-center justify-center">
-        <svg viewBox="0 0 120 120" className="w-full h-full" fill="none" xmlns="http://www.w3.org/2000/svg">
-          {/* Shield Outline (Thick Red) */}
+      <div className="relative w-12 h-12 shrink-0">
+        <svg viewBox="0 0 100 100" className="w-full h-full" fill="none" xmlns="http://www.w3.org/2000/svg">
+          {/* Minimalist Professional Shield */}
           <path 
-            d="M60 110 C60 110 10 90 10 50 V20 L60 5 L110 20 V50 C110 90 60 110 60 110Z" 
+            d="M50 90 C50 90 15 75 15 45 V25 L50 10 L85 25 V45 C85 75 50 90 50 90Z" 
             stroke={accentColor} 
-            strokeWidth="6" 
+            strokeWidth="5" 
             strokeLinejoin="round"
           />
           
-          {/* Barbell Passing Through Middle */}
-          <line x1="0" y1="70" x2="120" y2="70" stroke="currentColor" strokeWidth="4" />
-          <rect x="0" y="60" width="6" height="20" rx="1" fill="currentColor" />
-          <rect x="7" y="62" width="3" height="16" rx="1" fill="currentColor" />
-          <rect x="114" y="60" width="6" height="20" rx="1" fill="currentColor" />
-          <rect x="110" y="62" width="3" height="16" rx="1" fill="currentColor" />
-
-          {/* Silhouettes (Top Part) */}
-          <g transform="translate(40, 25) scale(0.7)">
-            {/* Male Figure */}
-            <circle cx="10" cy="10" r="8" fill="currentColor" />
-            <path d="M0 25 Q10 18 20 25 L20 45 L0 45 Z" fill="currentColor" />
-            {/* Female Figure */}
-            <circle cx="45" cy="10" r="8" fill="currentColor" />
-            <path d="M35 25 Q45 18 55 25 L55 45 L35 45 Z" fill="currentColor" />
-            {/* Small dumbbells */}
-            <rect x="-4" y="25" width="6" height="3" fill="currentColor" />
-            <rect x="58" y="25" width="6" height="3" fill="currentColor" />
-          </g>
-
-          {/* Text integrated in Logo */}
-          <text x="60" y="66" textAnchor="middle" fill="currentColor" className="font-bebas font-bold" style={{ fontSize: '20px', letterSpacing: '1px' }}>FINIX</text>
-          <text x="60" y="76" textAnchor="middle" fill="currentColor" className="font-syncopate font-bold uppercase" style={{ fontSize: '6px', letterSpacing: '1px' }}>Fitness</text>
+          {/* Dynamic "F" and barbell hybrid icon */}
+          <rect x="35" y="30" width="30" height="4" fill="currentColor" rx="1" />
+          <rect x="35" y="45" width="20" height="4" fill="currentColor" rx="1" />
+          <rect x="35" y="30" width="6" height="40" fill="currentColor" rx="1" />
+          
+          {/* Barbell ends */}
+          <rect x="30" y="65" width="16" height="6" fill="currentColor" rx="1" />
+          <rect x="54" y="65" width="16" height="6" fill="currentColor" rx="1" />
+          <line x1="46" y1="68" x2="54" y2="68" stroke="currentColor" strokeWidth="2" />
         </svg>
       </div>
-      <div className="flex flex-col leading-none">
-        <span className="font-bebas text-2xl tracking-tight">
-          FINIX <span className="text-finixRed">FITNESS</span>
-        </span>
-        <span className={`text-[7px] font-syncopate tracking-[0.2em] opacity-50`}>BUILD WITH FINIX</span>
+      <div className="flex flex-col leading-[1.1] pt-1">
+        <div className="flex items-baseline gap-1">
+          <span className="font-bebas text-3xl tracking-tight uppercase">FINIX</span>
+          <span className="font-bebas text-3xl tracking-tight uppercase text-finixRed">FITNESS</span>
+        </div>
+        <span className="text-[8px] font-syncopate tracking-[0.3em] opacity-60 uppercase font-bold">BUILD WITH FINIX</span>
       </div>
     </div>
   );

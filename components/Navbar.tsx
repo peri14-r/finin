@@ -54,21 +54,21 @@ const Navbar = () => {
       <nav 
         className={`transition-all duration-300 ${
           scrolled 
-            ? 'py-2 bg-white/95 dark:bg-luxuryBlack/95 backdrop-blur-md shadow-sm' 
-            : 'py-4 bg-transparent'
+            ? 'py-3 bg-white/95 dark:bg-luxuryBlack/95 backdrop-blur-md shadow-sm' 
+            : 'py-5 bg-transparent'
         }`}
       >
         <div className="max-w-[1400px] mx-auto px-6 flex justify-between items-center">
-          {/* Logo Section - Now follows the active theme consistently */}
+          {/* Logo Section */}
           <div className="flex items-center">
-            <Link to="/">
-              <Logo className="scale-90" theme={theme} />
+            <Link to="/" className="hover:opacity-90 transition-opacity">
+              <Logo className="scale-100" theme={theme} />
             </Link>
           </div>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center gap-8">
-            <div className="flex gap-10">
+          <div className="hidden md:flex items-center gap-6 lg:gap-10">
+            <div className="flex gap-8 lg:gap-12">
               {navLinks.map((link) => {
                 const isActive = location.pathname === link.path;
                 return (
@@ -93,11 +93,11 @@ const Navbar = () => {
               })}
             </div>
             
-            <div className="flex items-center gap-4 border-l border-white/10 dark:border-white/10 pl-8">
+            <div className="flex items-center gap-6 border-l border-black/10 dark:border-white/10 pl-8">
               {/* Theme Toggle Button */}
               <button 
                 onClick={toggleTheme}
-                className={`p-2 rounded-full border transition-all ${scrolled ? 'border-black/5 dark:border-white/10 text-black dark:text-white hover:bg-black/5 dark:hover:bg-white/5' : (theme === 'light' ? 'border-black/10 text-black hover:bg-black/5' : 'border-white/10 text-white hover:bg-white/10')}`}
+                className={`p-2.5 rounded-full border transition-all ${scrolled ? 'border-black/5 dark:border-white/10 text-black dark:text-white hover:bg-black/5 dark:hover:bg-white/5' : (theme === 'light' ? 'border-black/10 text-black hover:bg-black/5' : 'border-white/10 text-white hover:bg-white/10')}`}
                 aria-label="Toggle Theme"
               >
                 <AnimatePresence mode="wait">
@@ -113,7 +113,7 @@ const Navbar = () => {
                 </AnimatePresence>
               </button>
 
-              <Link to="/contact" className="px-10 py-3 bg-finixRed text-white font-bebas text-xl tracking-widest rounded-sm hover:brightness-110 transition-all uppercase shadow-lg shadow-finixRed/20">
+              <Link to="/contact" className="px-10 py-3.5 bg-finixRed text-white font-bebas text-xl tracking-widest rounded-sm hover:brightness-110 transition-all uppercase shadow-lg shadow-finixRed/20">
                 ENQUIRE
               </Link>
             </div>
@@ -124,10 +124,10 @@ const Navbar = () => {
               onClick={toggleTheme}
               className={`p-2 rounded-full ${scrolled ? 'text-black dark:text-white' : (theme === 'light' ? 'text-black' : 'text-white')}`}
             >
-              {theme === 'light' ? <Moon size={20} /> : <Sun size={20} />}
+              {theme === 'light' ? <Moon size={22} /> : <Sun size={22} />}
             </button>
             <button onClick={() => setIsOpen(!isOpen)} className={`p-2 ${scrolled ? 'text-black dark:text-white' : (theme === 'light' ? 'text-black' : 'text-white')}`}>
-              {isOpen ? <X size={24} /> : <Menu size={24} />}
+              {isOpen ? <X size={28} /> : <Menu size={28} />}
             </button>
           </div>
         </div>
@@ -136,9 +136,9 @@ const Navbar = () => {
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            initial={{ opacity: 0, y: '-100%' }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: '-100%' }}
+            initial={{ opacity: 0, x: '100%' }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: '100%' }}
             className="fixed inset-0 h-screen w-full bg-white dark:bg-luxuryBlack z-[120] flex flex-col justify-center items-center gap-10 p-6"
           >
             <button onClick={() => setIsOpen(false)} className="absolute top-10 right-10 text-black dark:text-white"><X size={32}/></button>
@@ -153,7 +153,7 @@ const Navbar = () => {
             ))}
             <button 
               onClick={toggleTheme}
-              className="mt-8 px-10 py-4 border-2 border-finixRed text-finixRed font-bebas text-2xl tracking-widest rounded-full flex items-center gap-4 uppercase"
+              className="mt-8 px-12 py-5 border-2 border-finixRed text-finixRed font-bebas text-2xl tracking-widest rounded-full flex items-center gap-4 uppercase"
             >
               {theme === 'light' ? 'Dark Mode' : 'Light Mode'}
               {theme === 'light' ? <Moon size={24} /> : <Sun size={24} />}
