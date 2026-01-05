@@ -1,178 +1,229 @@
 
-import React, { useState, useEffect, useRef } from 'react';
-import { motion, useScroll, useTransform, useSpring, useMotionValue, useInView } from 'framer-motion';
-import { ArrowRight, Trophy, Users, Star, Timer, LucideIcon } from 'lucide-react';
+import React from 'react';
+import { motion as m } from 'framer-motion';
+import { ArrowRight, MapPin, Video, Monitor, Dumbbell, Apple, LayoutGrid, Zap, Target, Star, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
-/**
- * Sub-component for animated numerical count-up
- */
-const AnimatedNumber = ({ value }: { value: string }) => {
-  const numericValue = parseFloat(value.replace(/[^0-9.]/g, ''));
-  const suffix = value.replace(/[0-9.]/g, '');
-  const isFloat = value.includes('.');
-  
-  const motionValue = useMotionValue(0);
-  const springValue = useSpring(motionValue, { damping: 40, stiffness: 80 });
-  const [displayValue, setDisplayValue] = useState("0");
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, amount: 0.5 });
-
-  useEffect(() => {
-    if (isInView) {
-      motionValue.set(numericValue);
-    }
-  }, [isInView, motionValue, numericValue]);
-
-  useEffect(() => {
-    return springValue.on("change", (latest) => {
-      setDisplayValue(isFloat ? latest.toFixed(1) : Math.floor(latest).toLocaleString());
-    });
-  }, [springValue, isFloat]);
-
-  return <span ref={ref}>{displayValue}{suffix}</span>;
-};
-
-const CounterCard = ({ value, label, icon: Icon }: { value: string, label: string, icon: LucideIcon }) => {
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 30 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.8 }}
-      className="flex flex-col items-center p-8 glass rounded-3xl group hover:border-finixRed/40 transition-colors"
-    >
-      <div className="p-4 bg-finixRed/10 rounded-2xl mb-4 group-hover:scale-110 transition-transform">
-        <Icon className="text-finixRed" size={32} />
-      </div>
-      <h3 className="font-bebas text-5xl mb-2">
-        <AnimatedNumber value={value} />
-      </h3>
-      <p className="font-syncopate text-[10px] text-white/50 tracking-widest text-center">{label}</p>
-    </motion.div>
-  );
-};
+// Cast motion to any to bypass environment-specific type checking issues
+const motion = m as any;
 
 const Home = () => {
-  const [heroOpacity, setHeroOpacity] = useState(0.5);
-  const { scrollY } = useScroll();
-  const yParallax = useTransform(scrollY, [0, 800], [0, 200]);
-
   return (
-    <div className="overflow-hidden">
-      {/* Hero Section */}
-      <section className="relative h-[95vh] min-h-[600px] flex items-center justify-center overflow-hidden">
-        {/* Parallax Background */}
-        <motion.div
-          style={{ y: yParallax }}
-          className="absolute inset-0 z-0"
-        >
+    <div className="overflow-hidden bg-white dark:bg-luxuryBlack">
+      {/* 1. HERO SECTION - Refined for both Light & Dark modes */}
+      <section className="relative h-screen flex items-center justify-center overflow-hidden bg-white dark:bg-black">
+        <div className="absolute inset-0 z-0">
           <img
-            src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&q=80&w=1920"
-            alt="Premium Gym Interior"
-            className="w-full h-[120%] object-cover scale-110"
-            loading="eager"
+            src="https://images.unsplash.com/photo-1571902943202-507ec2618e8f?auto=format&fit=crop&q=80&w=1920"
+            alt="Elite Gym Interior"
+            className="w-full h-full object-cover brightness-[0.95] dark:brightness-[0.4]"
           />
-        </motion.div>
-
-        {/* Dynamic Atmosphere Overlay */}
-        <div
-          className="absolute inset-0 z-10 bg-black transition-opacity duration-500 pointer-events-none"
-          style={{ opacity: 1 - heroOpacity }}
-        />
+          {/* Theme-aware overlay for text readability */}
+          <div className="absolute inset-0 bg-white/40 dark:bg-black/50" />
+        </div>
         
-        {/* Subtle Gradient Shadow */}
-        <div className="absolute inset-0 z-15 bg-gradient-to-b from-luxuryBlack/40 via-transparent to-luxuryBlack pointer-events-none" />
+        {/* Decorative thin border frame */}
+        <div className="absolute inset-0 z-10 flex items-center justify-center pointer-events-none p-8 md:p-12">
+          <div className="w-full h-full max-w-[1500px] border border-black/10 dark:border-white/10 rounded-sm"></div>
+        </div>
 
-        {/* Hero Content */}
-        <div className="relative z-20 max-w-7xl mx-auto px-6 text-center">
-          <motion.p
-            initial={{ opacity: 0, letterSpacing: '0px' }}
-            animate={{ opacity: 1, letterSpacing: '8px' }}
-            transition={{ duration: 1.2, ease: "easeOut" }}
-            className="font-syncopate text-finixRed text-xs md:text-sm uppercase mb-6"
-          >
-            15+ Years of Excellence | 10,000+ Transformations
-          </motion.p>
-          <motion.h1
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 0.2, ease: [0.23, 1, 0.32, 1] }}
-            className="font-bebas text-7xl md:text-[8rem] lg:text-[10rem] leading-[0.9] mb-8 text-glow select-none"
-          >
-            BUILD YOUR <br />
-            <span className="text-finixRed italic">DREAM SUCCESS</span>
-          </motion.h1>
+        <div className="relative z-20 w-full max-w-[1400px] mx-auto px-6 md:px-16 flex flex-col md:grid md:grid-cols-12 items-center gap-12">
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.5 }}
-            className="flex flex-col sm:flex-row gap-6 justify-center"
+            initial={{ opacity: 0, x: -50 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8 }}
+            className="md:col-span-7 text-left"
           >
-            <Link
-              to="/contact"
-              className="px-10 py-5 bg-finixRed text-white font-bebas text-xl tracking-widest rounded-full hover:bg-white hover:text-luxuryBlack transition-all duration-300 flex items-center justify-center gap-2 group shadow-lg shadow-finixRed/20"
-            >
-              Join The Legacy <ArrowRight className="group-hover:translate-x-2 transition-transform" />
-            </Link>
-            <Link
-              to="/programs"
-              className="px-10 py-5 glass text-white font-bebas text-xl tracking-widest rounded-full hover:bg-white/10 transition-all duration-300 flex items-center justify-center"
-            >
-              Explore Programs
-            </Link>
-          </motion.div>
-        </div>
-
-        {/* Atmosphere Intensity Controller */}
-        <div className="absolute bottom-10 left-1/2 -translate-x-1/2 z-30 w-full max-w-[280px] px-6">
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1 }}
-            className="glass p-4 rounded-2xl flex flex-col gap-2 shadow-2xl"
-          >
-            <div className="flex justify-between font-syncopate text-[8px] uppercase tracking-wider text-white/50">
-              <span>ATMOSPHERE INTENSITY</span>
-              <span className="text-finixRed">{Math.round(heroOpacity * 100)}%</span>
+            <p className="font-syncopate text-finixRed text-[10px] md:text-xs tracking-[0.4em] uppercase mb-6 font-bold">Build Your Dream Success</p>
+            <h1 className="font-bebas text-8xl md:text-9xl lg:text-[10rem] leading-[0.82] mb-10 font-bold uppercase tracking-tight">
+              <span className="text-luxuryBlack dark:text-white drop-shadow-sm">BUILD YOUR</span> <br />
+              <span className="text-finixRed drop-shadow-lg">DREAM SUCCESS</span>
+            </h1>
+            <p className="font-jakarta text-black/80 dark:text-white/70 text-sm md:text-base max-w-lg mb-12 uppercase tracking-[0.1em] leading-relaxed font-semibold">
+              When you have a clear vision you're less likely to take the first step toward it. Let us be your catalyst for evolution.
+            </p>
+            <div className="flex flex-wrap items-center gap-10">
+              <Link
+                to="/contact"
+                className="px-14 py-6 bg-finixRed text-white font-bebas text-3xl tracking-widest rounded-sm hover:brightness-110 transition-all flex items-center gap-4 group uppercase shadow-2xl shadow-finixRed/40"
+              >
+                JOIN US <ArrowRight size={28} className="group-hover:translate-x-3 transition-transform" />
+              </Link>
+              <Link
+                to="/programs"
+                className="font-bebas text-2xl tracking-widest text-black/80 dark:text-white/80 hover:text-finixRed transition-colors uppercase border-b-2 border-transparent hover:border-finixRed"
+              >
+                VIEW PROGRAMS
+              </Link>
             </div>
-            <input
-              type="range"
-              min="0.2"
-              max="1"
-              step="0.01"
-              value={heroOpacity}
-              onChange={(e) => setHeroOpacity(parseFloat(e.target.value))}
-              aria-label="Adjust hero background intensity"
-              className="w-full h-1 bg-white/10 rounded-lg appearance-none cursor-pointer accent-finixRed hover:accent-finixRed/80 transition-all"
-            />
           </motion.div>
+
+          {/* Promotional Cards on the right */}
+          <div className="md:col-span-5 hidden md:flex flex-col gap-10 relative mt-16">
+            {/* Top Card */}
+            <motion.div
+              initial={{ opacity: 0, y: 50 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4, duration: 0.8 }}
+              className="bg-black/90 p-1 rounded-3xl group overflow-hidden shadow-2xl border border-white/5"
+            >
+              <div className="relative h-60 rounded-2xl overflow-hidden">
+                <img 
+                  src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&q=80&w=800" 
+                  className="w-full h-full object-cover grayscale transition-all duration-1000 group-hover:scale-110 group-hover:grayscale-0" 
+                  alt="Protocol" 
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent p-10 flex flex-col justify-end">
+                  <h3 className="font-bebas text-4xl text-white tracking-widest leading-none mb-2">DON'T JUST DREAM, DO IT</h3>
+                  <p className="text-[10px] font-syncopate text-finixRed tracking-[0.3em] font-bold uppercase">TRANSFORMATION PROTOCOLS</p>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Bottom Card */}
+            <motion.div
+              initial={{ opacity: 0, y: 50 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.6, duration: 0.8 }}
+              className="bg-black/90 p-1 rounded-3xl group overflow-hidden shadow-2xl border border-finixRed/20"
+            >
+              <div className="relative h-60 rounded-2xl overflow-hidden">
+                <img 
+                  src="https://images.unsplash.com/photo-1534367507873-d2b7e24959ac?auto=format&fit=crop&q=80&w=800" 
+                  className="w-full h-full object-cover transition-all duration-1000 group-hover:scale-110 group-hover:brightness-110" 
+                  alt="Training" 
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-finixRed/90 via-transparent to-transparent p-10 flex flex-col justify-end">
+                  <h3 className="font-bebas text-4xl text-white tracking-widest leading-none mb-2 uppercase">PERSONAL TRAINING</h3>
+                  <p className="text-[10px] font-syncopate text-white tracking-[0.3em] font-bold uppercase opacity-80">OFFER VALID TILL 10TH AUG</p>
+                </div>
+              </div>
+            </motion.div>
+          </div>
         </div>
       </section>
 
-      {/* Stats Section */}
-      <section className="py-32 max-w-7xl mx-auto px-6">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-          <CounterCard icon={Timer} value="15+" label="YEARS EXPERIENCE" />
-          <CounterCard icon={Users} value="10k+" label="MEMBERS TRANSFORMED" />
-          <CounterCard icon={Trophy} value="50+" label="EXPERT TRAINERS" />
-          <CounterCard icon={Star} value="5.0" label="STARS RATING" />
+      {/* 2. LEGACY SECTION */}
+      <section className="bg-finixRed py-24 text-white overflow-hidden relative">
+        <div className="absolute top-0 right-0 w-1/2 h-full bg-black/5 -skew-x-12 translate-x-32" />
+        <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center relative z-10">
+          <motion.div 
+            initial={{ opacity: 0, x: -30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+          >
+            <span className="font-syncopate text-[10px] tracking-[0.5em] uppercase opacity-70 mb-4 block">Build Your Dream</span>
+            <h2 className="font-bebas text-6xl md:text-8xl leading-none mb-8">10+ YEARS OF <br />UNDEFEATED SUCCESS</h2>
+            <p className="font-jakarta text-lg mb-10 opacity-90 leading-relaxed max-w-lg">
+              It's the time to cut down your calories by taking a step to reach us. Exercising indeed makes you feel fresh and boosts your enthusiasm. Our legacy is built on thousands of transformations.
+            </p>
+            <Link to="/contact" className="px-10 py-4 bg-white text-finixRed font-bebas text-xl tracking-widest hover:bg-black hover:text-white transition-all">JOIN US</Link>
+          </motion.div>
+          
+          <div className="grid grid-cols-2 gap-6">
+            {[
+              { label: 'Personal Trainings', val: '570+', icon: Target },
+              { label: 'Years Experience', val: '10+', icon: Star },
+              { label: 'Online Sessions', val: '1020+', icon: Video },
+              { label: 'Happy Customers', val: '2000+', icon: Zap }
+            ].map((stat, i) => (
+              <motion.div 
+                key={i}
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1 }}
+                className="bg-white dark:bg-luxuryGray p-8 rounded-2xl flex flex-col items-center justify-center text-center group hover:shadow-2xl transition-all border border-black/5 dark:border-white/5"
+              >
+                <stat.icon className="text-finixRed mb-4 group-hover:scale-110 transition-transform" size={32} />
+                <h3 className="font-bebas text-5xl text-black dark:text-white mb-1">{stat.val}</h3>
+                <p className="font-syncopate text-[8px] text-black/40 dark:text-white/40 uppercase tracking-widest">{stat.label}</p>
+              </motion.div>
+            ))}
+          </div>
         </div>
       </section>
 
-      {/* Kinetic Text Banner */}
-      <section className="py-16 bg-finixRed overflow-hidden relative shadow-[0_0_50px_rgba(255,0,60,0.3)]">
-        <motion.div
-          animate={{ x: [-1000, 0] }}
-          transition={{ repeat: Infinity, duration: 25, ease: "linear" }}
-          className="flex gap-20 whitespace-nowrap"
-        >
-          {[...Array(8)].map((_, i) => (
-            <span key={i} className="font-bebas text-8xl text-white/15 italic select-none">
-              UNLEASH THE BEAST • NO EXCUSES • FINIX PERFORMANCE • ELITE LEVEL •
-            </span>
-          ))}
-        </motion.div>
+      {/* 4. LOCATIONS SECTION */}
+      <section className="py-24 bg-white dark:bg-luxuryBlack px-6 red-mesh">
+        <div className="max-w-7xl mx-auto text-center">
+          <motion.h2 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            className="font-bebas text-6xl md:text-8xl mb-4 text-black dark:text-white uppercase"
+          >
+            WE ARE <span className="text-finixRed">LOCATED IN</span>
+          </motion.h2>
+          <p className="text-black/50 dark:text-white/40 font-jakarta italic mb-16 max-w-2xl mx-auto font-medium">
+            We are here to support you in that first step. We want you to live a fit and healthy lifestyle!
+          </p>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {[
+              { name: 'Indiranagar', type: 'Physical Lab', icon: MapPin },
+              { name: 'Online', type: 'Global Training', icon: Video },
+              { name: 'Basavangudi', type: 'Physical Lab', icon: MapPin }
+            ].map((loc, i) => (
+              <motion.div
+                key={i}
+                whileHover={{ y: -10 }}
+                className="bg-white dark:bg-luxuryGray p-12 rounded-[2rem] flex flex-col items-center gap-6 group border border-black/10 dark:border-white/5 hover:border-finixRed dark:hover:border-finixRed transition-all shadow-sm hover:shadow-xl"
+              >
+                <div className="p-6 bg-finixRed/5 rounded-full group-hover:bg-finixRed transition-colors">
+                  <loc.icon className="text-finixRed group-hover:text-white" size={32} />
+                </div>
+                <h3 className="font-bebas text-3xl text-black dark:text-white tracking-widest uppercase">{loc.name}</h3>
+                <p className="font-syncopate text-[9px] text-black/40 dark:text-white/30 tracking-[0.3em] uppercase font-bold">{loc.type}</p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 5. TRANSFORMATION CAROUSEL */}
+      <section className="py-32 bg-softWhite dark:bg-luxuryGray text-black dark:text-white px-6">
+        <div className="max-w-7xl mx-auto">
+          <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-8">
+            <div className="max-w-xl">
+              <span className="font-syncopate text-finixRed text-[10px] tracking-widest uppercase mb-4 block font-bold">Wellness Redefined!</span>
+              <h2 className="font-bebas text-6xl md:text-8xl leading-none uppercase text-black dark:text-white">FINIX TRANSFORMATION PROGRAM</h2>
+            </div>
+            <div className="flex gap-4">
+              <button className="p-4 border border-black/10 dark:border-white/10 text-black dark:text-white hover:bg-finixRed hover:text-white transition-all rounded-full"><ChevronLeft /></button>
+              <button className="p-4 border border-black/10 dark:border-white/10 text-black dark:text-white hover:bg-finixRed hover:text-white transition-all rounded-full"><ChevronRight /></button>
+            </div>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-12 items-center">
+            <div className="grid grid-cols-2 gap-4 h-[500px]">
+              <div className="bg-white dark:bg-luxuryBlack rounded-3xl overflow-hidden relative shadow-md">
+                <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&fit=crop&q=80&w=800" className="w-full h-full object-cover grayscale opacity-80" alt="Before" />
+                <span className="absolute bottom-4 left-4 font-bebas text-white text-sm px-4 py-1 bg-black/70 backdrop-blur-sm rounded uppercase tracking-wider">BEFORE</span>
+              </div>
+              <div className="bg-white dark:bg-luxuryBlack rounded-3xl overflow-hidden relative shadow-md">
+                <img src="https://images.unsplash.com/photo-1594381898411-846e7d193883?auto=format&fit=crop&q=80&w=800" className="w-full h-full object-cover" alt="After" />
+                <span className="absolute bottom-4 left-4 font-bebas text-white text-sm px-4 py-1 bg-finixRed rounded shadow-lg uppercase tracking-wider">AFTER</span>
+              </div>
+            </div>
+            <div className="space-y-8">
+              <h3 className="font-bebas text-4xl text-finixRed italic">HOLISTIC WELLNESS SYSTEM</h3>
+              <p className="font-jakarta text-lg text-black/70 dark:text-white/60 leading-relaxed font-medium">
+                Our transformation program is a calculated synergy of bio-mechanical integrity, nutritional strategy, and elite coaching. We don't just change weight; we change your physiological identity.
+              </p>
+              <div className="grid grid-cols-2 gap-6 pt-6">
+                <div className="border-l-4 border-finixRed pl-6">
+                  <p className="font-bebas text-3xl text-black dark:text-white">FAT LOSS</p>
+                  <p className="text-[10px] text-black/40 dark:text-white/40 font-syncopate font-bold uppercase">INCINERATION</p>
+                </div>
+                <div className="border-l-4 border-finixRed pl-6">
+                  <p className="font-bebas text-3xl text-black dark:text-white">LEAN MUSCLE</p>
+                  <p className="text-[10px] text-black/40 dark:text-white/40 font-syncopate font-bold uppercase">DEVELOPMENT</p>
+                </div>
+              </div>
+              <button className="mt-10 px-12 py-4 bg-finixRed text-white font-bebas text-2xl tracking-widest rounded hover:bg-black transition-all shadow-lg shadow-finixRed/20">HAPPY CUSTOMERS</button>
+            </div>
+          </div>
+        </div>
       </section>
     </div>
   );

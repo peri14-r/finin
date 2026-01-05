@@ -1,7 +1,6 @@
-
-import React, { useState, useEffect, createContext, useContext } from 'react';
+import React, { useEffect, useState, createContext, useContext } from 'react';
 import { HashRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence, motion as m } from 'framer-motion';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import Home from './pages/Home';
@@ -10,16 +9,22 @@ import Programs from './pages/Programs';
 import Contact from './pages/Contact';
 import { Theme } from './types';
 
-const ThemeContext = createContext<{
+// Cast motion to any to bypass environment-specific type checking issues
+const motion = m as any;
+
+interface ThemeContextType {
   theme: Theme;
   toggleTheme: () => void;
-}>({ theme: 'dark', toggleTheme: () => {} });
+}
 
-export const useTheme = () => useContext(ThemeContext);
+const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
-/**
- * Ensures scroll position is reset to top on every route change.
- */
+export const useTheme = () => {
+  const context = useContext(ThemeContext);
+  if (!context) throw new Error('useTheme must be used within a ThemeProvider');
+  return context;
+};
+
 const ScrollToTop = () => {
   const { pathname } = useLocation();
   useEffect(() => {
@@ -28,16 +33,14 @@ const ScrollToTop = () => {
   return null;
 };
 
-// Fix: Making children optional to resolve the "missing children" type error that occurs in some environments
-// when components are used inside JSX props like 'element'.
 const PageWrapper = ({ children }: { children?: React.ReactNode }) => {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 15 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -15 }}
-      transition={{ duration: 0.4, ease: [0.23, 1, 0.32, 1] }}
-      className="min-h-screen pt-20"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.5 }}
+      className="min-h-screen"
     >
       {children}
     </motion.div>
@@ -47,7 +50,7 @@ const PageWrapper = ({ children }: { children?: React.ReactNode }) => {
 const AnimatedRoutes = () => {
   const location = useLocation();
   return (
-    <AnimatePresence mode="wait" initial={false}>
+    <AnimatePresence mode="wait">
       <Routes location={location} key={location.pathname}>
         <Route path="/" element={<PageWrapper><Home /></PageWrapper>} />
         <Route path="/about" element={<PageWrapper><About /></PageWrapper>} />
@@ -60,26 +63,28 @@ const AnimatedRoutes = () => {
 };
 
 export default function App() {
-  const [theme, setTheme] = useState<Theme>('dark');
+  const [theme, setTheme] = useState<Theme>('light');
+
+  useEffect(() => {
+    const savedTheme = localStorage.getItem('theme') as Theme;
+    if (savedTheme) {
+      setTheme(savedTheme);
+      document.documentElement.classList.toggle('dark', savedTheme === 'dark');
+    }
+  }, []);
 
   const toggleTheme = () => {
     const newTheme = theme === 'light' ? 'dark' : 'light';
     setTheme(newTheme);
+    localStorage.setItem('theme', newTheme);
     document.documentElement.classList.toggle('dark', newTheme === 'dark');
   };
-
-  // Ensure dark mode is active by default on the root element
-  useEffect(() => {
-    document.documentElement.classList.add('dark');
-  }, []);
 
   return (
     <ThemeContext.Provider value={{ theme, toggleTheme }}>
       <Router>
         <ScrollToTop />
-        <div className={`min-h-screen flex flex-col transition-colors duration-500 ${
-          theme === 'dark' ? 'bg-luxuryBlack text-white' : 'bg-white text-luxuryBlack'
-        }`}>
+        <div className={`min-h-screen flex flex-col transition-colors duration-500 bg-white dark:bg-luxuryBlack text-luxuryBlack dark:text-white`}>
           <Navbar />
           <main className="flex-grow">
             <AnimatedRoutes />
