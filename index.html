@@ -1,12 +1,13 @@
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Finix Fitness | Elite Performance</title>
+    <title>FINIX FITNESS | Rise Strong. Train Relentless.</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&family=Syncopate:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Plus+Jakarta+Sans:wght@300;400;600;800&family=Syncopate:wght@700&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
       tailwind.config = {
@@ -15,9 +16,9 @@
           extend: {
             colors: {
               finixRed: '#ff0000',
-              luxuryBlack: '#050505',
-              luxuryGray: '#121212',
-              softWhite: '#f8f8f8',
+              matteBlack: '#0a0a0a',
+              charcoal: '#121212',
+              neonRed: '#ff3131',
             },
             fontFamily: {
               bebas: ['Bebas Neue', 'sans-serif'],
@@ -31,55 +32,37 @@
     <style>
       body {
         font-family: 'Plus Jakarta Sans', sans-serif;
-        background-color: #ffffff;
-        color: #1a1a1a;
-        overflow-x: hidden;
-      }
-      .dark body {
-        background-color: #050505;
+        background-color: #0a0a0a;
         color: #ffffff;
       }
-      * {
-        transition: background-color 0.4s ease-in-out, border-color 0.4s ease-in-out, color 0.4s ease-in-out, opacity 0.4s ease-in-out;
+      .text-glow {
+        text-shadow: 0 0 20px rgba(255, 0, 0, 0.6);
       }
-      .glass {
-        background: rgba(255, 255, 255, 0.8);
-        backdrop-filter: blur(12px);
-        -webkit-backdrop-filter: blur(12px);
-        border: 1px solid rgba(0, 0, 0, 0.05);
+      .scanner-line {
+        height: 1px;
+        width: 100%;
+        background: linear-gradient(90deg, transparent, #ff0000, transparent);
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 20;
+        animation: scan 3s linear infinite;
+        opacity: 0.3;
       }
-      .dark .glass {
-        background: rgba(18, 18, 18, 0.8);
+      @keyframes scan {
+        0% { transform: translateY(0); }
+        100% { transform: translateY(500px); }
+      }
+      ::-webkit-scrollbar { width: 4px; }
+      ::-webkit-scrollbar-track { background: #0a0a0a; }
+      ::-webkit-scrollbar-thumb { background: #ff0000; border-radius: 10px; }
+      .glass-ui {
+        background: rgba(255, 255, 255, 0.02);
+        backdrop-filter: blur(10px);
         border: 1px solid rgba(255, 255, 255, 0.05);
       }
-      .glass-dark {
-        background: rgba(0, 0, 0, 0.2);
-        backdrop-filter: blur(12px);
-        -webkit-backdrop-filter: blur(12px);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-      }
-      .text-glow-red {
-        text-shadow: 0 0 10px rgba(255, 0, 0, 0.3);
-      }
-      ::-webkit-scrollbar {
-        width: 8px;
-      }
-      ::-webkit-scrollbar-track {
-        background: #ffffff;
-      }
-      .dark ::-webkit-scrollbar-track {
-        background: #050505;
-      }
-      ::-webkit-scrollbar-thumb {
-        background: #ff0000;
-        border-radius: 4px;
-      }
-      .red-mesh {
-        background-image: radial-gradient(at 0% 0%, rgba(255, 0, 0, 0.15) 0, transparent 50%), 
-                          radial-gradient(at 50% 0%, rgba(255, 0, 0, 0.05) 0, transparent 50%);
-      }
     </style>
-  <script type="importmap">
+    <script type="importmap">
 {
   "imports": {
     "react": "https://esm.sh/react@^19.2.3",
@@ -88,12 +71,12 @@
     "react-router-dom": "https://esm.sh/react-router-dom@^7.11.0",
     "framer-motion": "https://esm.sh/framer-motion@^12.23.26",
     "lucide-react": "https://esm.sh/lucide-react@^0.562.0",
-    "vite": "https://esm.sh/vite@^7.3.0",
+    "vite": "https://esm.sh/vite@^7.3.1",
     "@vitejs/plugin-react": "https://esm.sh/@vitejs/plugin-react@^5.1.2"
   }
 }
 </script>
-</head>
+  </head>
   <body>
     <div id="root"></div>
     <script type="module" src="/index.tsx"></script>

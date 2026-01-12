@@ -1,181 +1,180 @@
 
 import React from 'react';
 import { motion as m } from 'framer-motion';
-import { ArrowRight, MapPin, Video, Monitor, Dumbbell, Apple, LayoutGrid, Zap, Target, Star, ChevronLeft, ChevronRight } from 'lucide-react';
+import { ArrowRight, Zap, Target, Shield, Star } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { useTheme } from '../App';
 
-// Cast motion to any to bypass environment-specific type checking issues
 const motion = m as any;
 
+const performanceArchive = [
+  { id: 1, title: "STRENGTH TRAINING", sub: "POWER PROTOCOL", img: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&q=80&w=800" },
+  { id: 2, title: "WEIGHT LOSS", sub: "METABOLIC INCINERATOR", img: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&fit=crop&q=80&w=800" },
+  { id: 3, title: "FUNCTIONAL FLOW", sub: "CORE DOMINANCE", img: "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&q=80&w=800" }
+];
+
 const Home = () => {
+  const { theme } = useTheme();
+
   return (
-    <div className="overflow-hidden bg-white dark:bg-luxuryBlack">
-      {/* 1. HERO SECTION - Refined to prevent overlap and fix broken assets */}
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-white dark:bg-black pt-32 pb-20 lg:pt-40 lg:pb-0">
+    <div className={`overflow-x-hidden ${theme === 'dark' ? 'bg-matteBlack' : 'bg-white'}`}>
+      {/* 1. CINEMATIC HERO */}
+      <section className="relative min-h-[90vh] md:h-screen flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 z-0">
-          <img
-            src="https://images.unsplash.com/photo-1571902943202-507ec2618e8f?auto=format&fit=crop&q=80&w=1920"
-            alt="Elite Gym Interior"
-            className="w-full h-full object-cover brightness-[0.9] dark:brightness-[0.4]"
-          />
-          <div className="absolute inset-0 bg-white/40 dark:bg-black/65" />
-        </div>
-        
-        {/* Decorative thin border frame */}
-        <div className="absolute inset-0 z-10 hidden md:flex items-center justify-center pointer-events-none p-8 lg:p-12">
-          <div className="w-full h-full max-w-[1500px] border border-black/10 dark:border-white/10 rounded-sm"></div>
+          <video autoPlay muted loop playsInline className="w-full h-full object-cover opacity-20 dark:opacity-30 scale-105">
+            <source src="https://player.vimeo.com/external/494163966.sd.mp4?s=3401777a8b30107769ef79c50009c91350a58e69&profile_id=165" type="video/mp4" />
+          </video>
+          <div className={`absolute inset-0 ${theme === 'dark' ? 'bg-gradient-to-b from-transparent via-matteBlack/60 to-matteBlack' : 'bg-gradient-to-b from-transparent via-white/40 to-white'}`} />
         </div>
 
-        <div className="relative z-20 w-full max-w-[1400px] mx-auto px-6 lg:px-16 flex flex-col lg:grid lg:grid-cols-12 items-center gap-12 lg:gap-8">
+        <div className="relative z-10 text-center px-4 md:px-6 w-full max-w-7xl mx-auto">
           <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            animate={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="lg:col-span-7 text-left w-full lg:pr-10"
           >
-            <p className="font-syncopate text-finixRed text-[10px] md:text-xs tracking-[0.4em] uppercase mb-6 font-bold">Build Your Dream Success</p>
-            <h1 className="font-bebas text-5xl sm:text-7xl md:text-8xl lg:text-[6.5rem] xl:text-[8rem] 2xl:text-[9rem] leading-[0.95] lg:leading-[0.85] mb-8 lg:mb-12 font-bold uppercase tracking-tight">
-              <span className="text-luxuryBlack dark:text-white drop-shadow-sm">BUILD YOUR</span> <br />
-              <span className="text-finixRed drop-shadow-lg">DREAM SUCCESS</span>
+            <span className="font-syncopate text-finixRed text-[8px] md:text-[10px] tracking-[0.6em] md:tracking-[0.8em] uppercase font-bold mb-4 md:mb-6 block">
+              Finix Fitness Bangalore
+            </span>
+            <h1 className={`font-bebas text-[clamp(3.5rem,14vw,9rem)] leading-[0.85] mb-6 md:mb-8 font-black uppercase ${theme === 'dark' ? 'text-white' : 'text-matteBlack'}`}>
+              BUILD STRENGTH <br />
+              THAT <span className="text-finixRed text-glow italic">SHOWS</span>
             </h1>
-            <p className="font-jakarta text-black/80 dark:text-white/70 text-sm md:text-base lg:text-lg max-w-lg mb-10 lg:mb-14 uppercase tracking-[0.1em] leading-relaxed font-semibold">
-              When you have a clear vision you're less likely to take the first step toward it. Let us be your catalyst for evolution.
+            <p className={`font-jakarta ${theme === 'dark' ? 'text-white/50' : 'text-matteBlack/60'} text-xs md:text-lg max-w-2xl mx-auto mb-10 md:mb-12 uppercase tracking-widest font-semibold px-4`}>
+              No shortcuts. No excuses. Just elite biological results for the modern athlete.
             </p>
-            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-6 lg:gap-10">
-              <Link
-                to="/contact"
-                className="w-full sm:w-auto px-10 lg:px-14 py-5 lg:py-6 bg-finixRed text-white font-bebas text-2xl lg:text-3xl tracking-widest rounded-sm hover:brightness-110 transition-all flex items-center justify-center gap-4 group uppercase shadow-2xl shadow-finixRed/40"
-              >
-                JOIN US <ArrowRight size={24} className="group-hover:translate-x-3 transition-transform" />
+            <div className="flex flex-col sm:flex-row gap-4 md:gap-6 justify-center items-center px-4">
+              <Link to="/contact" className="w-full sm:w-auto px-8 md:px-12 py-4 md:py-5 bg-finixRed text-white font-bebas text-2xl md:text-3xl tracking-widest hover:bg-black transition-all shadow-2xl shadow-finixRed/20">
+                JOIN FINIX
               </Link>
-              <Link
-                to="/programs"
-                className="font-bebas text-xl lg:text-2xl tracking-widest text-black/80 dark:text-white/80 hover:text-finixRed transition-colors uppercase border-b-2 border-transparent hover:border-finixRed"
-              >
-                VIEW PROGRAMS
+              <Link to="/contact" className={`w-full sm:w-auto px-8 md:px-12 py-4 md:py-5 border ${theme === 'dark' ? 'border-white/20 text-white hover:bg-white hover:text-black' : 'border-matteBlack/20 text-matteBlack hover:bg-matteBlack hover:text-white'} font-bebas text-2xl md:text-3xl tracking-widest transition-all`}>
+                FREE TRIAL
               </Link>
             </div>
           </motion.div>
+        </div>
+      </section>
 
-          {/* Promotional Cards - Using high-reliability sources */}
-          <div className="lg:col-span-5 hidden md:flex flex-col sm:flex-row lg:flex-col gap-6 lg:gap-8 relative w-full lg:mt-12">
-            <motion.div
-              initial={{ opacity: 0, y: 50 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.4, duration: 0.8 }}
-              className="bg-black/90 p-1 rounded-3xl group overflow-hidden shadow-2xl border border-white/5 flex-1"
+      {/* 2. STATS BAR */}
+      <section className={`py-12 md:py-20 border-y ${theme === 'dark' ? 'border-white/5' : 'border-black/5'}`}>
+        <div className="container mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12 text-center">
+          {[
+            { label: 'EXPERIENCE', val: '5+ YRS' },
+            { label: 'TRANSFORMS', val: '1000+' },
+            { label: 'COACHES', val: 'ELITE' },
+            { label: 'FACILITIES', val: 'MODERN' }
+          ].map((s, i) => (
+            <div key={i}>
+              <div className={`font-bebas text-4xl md:text-7xl ${theme === 'dark' ? 'text-white' : 'text-matteBlack'} mb-1`}>{s.val}</div>
+              <div className={`font-syncopate text-[7px] md:text-[8px] ${theme === 'dark' ? 'text-white/30' : 'text-matteBlack/40'} tracking-[0.2em] md:tracking-[0.3em] font-bold uppercase`}>{s.label}</div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* 3. PROGRAMS PREVIEW */}
+      <section className="py-20 md:py-32 container mx-auto px-4 md:px-6">
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 md:mb-20 gap-6">
+          <div>
+            <span className="font-syncopate text-finixRed text-[10px] tracking-widest font-bold uppercase block mb-2">The Protocol</span>
+            <h2 className={`font-bebas text-5xl md:text-9xl uppercase leading-none ${theme === 'dark' ? 'text-white' : 'text-matteBlack'}`}>ELITE ARCHIVES</h2>
+          </div>
+          <Link to="/programs" className={`flex items-center gap-4 font-bebas text-xl md:text-2xl tracking-widest hover:text-finixRed transition-colors ${theme === 'dark' ? 'text-white' : 'text-matteBlack'}`}>
+            VIEW ALL <ArrowRight size={20} />
+          </Link>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-10">
+          {performanceArchive.map((p, i) => (
+            <motion.div 
+              key={p.id}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.1 }}
+              className={`group relative aspect-[4/5] md:aspect-[3/4] overflow-hidden ${theme === 'dark' ? 'bg-charcoal' : 'bg-gray-100'} rounded-[2rem] md:rounded-[2.5rem]`}
             >
-              <div className="relative h-48 sm:h-56 lg:h-64 rounded-2xl overflow-hidden">
-                <img 
-                  src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&q=80&w=800" 
-                  className="w-full h-full object-cover grayscale transition-all duration-1000 group-hover:scale-110 group-hover:grayscale-0" 
-                  alt="Transformation" 
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/20 to-transparent p-6 lg:p-10 flex flex-col justify-end">
-                  <h3 className="font-bebas text-3xl lg:text-4xl text-white tracking-widest leading-none mb-2 uppercase">DON'T JUST DREAM, DO IT</h3>
-                  <p className="text-[10px] font-syncopate text-finixRed tracking-[0.3em] font-bold uppercase">TRANSFORMATION PROTOCOLS</p>
-                </div>
+              <div className="scanner-line" />
+              <img src={p.img} className="absolute inset-0 w-full h-full object-cover grayscale opacity-40 group-hover:opacity-100 group-hover:scale-110 group-hover:grayscale-0 transition-all duration-700" alt={p.title} />
+              <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent" />
+              <div className="absolute inset-x-6 md:inset-x-8 bottom-6 md:bottom-8">
+                <span className="font-syncopate text-[7px] md:text-[8px] text-finixRed tracking-[0.3em] font-bold block mb-2 uppercase">{p.sub}</span>
+                <h3 className="font-bebas text-3xl md:text-4xl text-white tracking-widest mb-3 md:mb-4">{p.title}</h3>
+                <Link to="/contact" className="inline-flex items-center gap-2 font-syncopate text-[7px] md:text-[8px] tracking-widest font-bold text-white/70 hover:text-finixRed transition-colors uppercase">
+                  SECURE ACCESS <ArrowRight size={12} />
+                </Link>
               </div>
             </motion.div>
+          ))}
+        </div>
+      </section>
 
-            <motion.div
-              initial={{ opacity: 0, y: 50 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.6, duration: 0.8 }}
-              className="bg-black/90 p-1 rounded-3xl group overflow-hidden shadow-2xl border border-finixRed/20 flex-1"
-            >
-              <div className="relative h-48 sm:h-56 lg:h-64 rounded-2xl overflow-hidden">
-                <img 
-                  src="https://images.unsplash.com/photo-1541534741688-6078c6bfb5c5?auto=format&fit=crop&q=80&w=800" 
-                  className="w-full h-full object-cover transition-all duration-1000 group-hover:scale-110 group-hover:brightness-110" 
-                  alt="Personal Training" 
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-finixRed/90 via-transparent to-transparent p-6 lg:p-10 flex flex-col justify-end">
-                  <h3 className="font-bebas text-3xl lg:text-4xl text-white tracking-widest leading-none mb-2 uppercase">PERSONAL TRAINING</h3>
-                  <p className="text-[10px] font-syncopate text-white tracking-[0.3em] font-bold uppercase opacity-80">OFFER VALID TILL 10TH AUG</p>
-                </div>
+      {/* 4. WHY FINIX */}
+      <section className={`py-20 md:py-32 ${theme === 'dark' ? 'bg-charcoal' : 'bg-gray-50'}`}>
+        <div className="container mx-auto px-4 md:px-6">
+          <div className="grid lg:grid-cols-2 gap-12 md:gap-20 items-center">
+            <div className="relative aspect-square rounded-[2rem] md:rounded-[3rem] overflow-hidden order-2 lg:order-1">
+               <img src="https://images.unsplash.com/photo-1540497077202-7c8a3999166f?auto=format&fit=crop&q=80&w=1000" className="w-full h-full object-cover grayscale" alt="Gym" />
+               <div className="absolute inset-0 bg-finixRed/10 mix-blend-overlay" />
+            </div>
+            <div className="order-1 lg:order-2">
+              <h2 className={`font-bebas text-5xl md:text-8xl mb-8 md:mb-12 uppercase leading-none ${theme === 'dark' ? 'text-white' : 'text-matteBlack'}`}>THE <span className="text-finixRed">FINIX</span> EDGE</h2>
+              <div className="grid sm:grid-cols-2 lg:grid-cols-1 gap-6 md:gap-8">
+                {[
+                  { title: "ELITE COACHES", desc: "Certified specialists in biomechanical dominance.", icon: Star },
+                  { title: "STRUCTURED PLANS", desc: "Data-driven methodology for measurable progress.", icon: Target },
+                  { title: "MODERN EQUIPMENT", desc: "High-spec industrial machines for peak resistance.", icon: Zap },
+                  { title: "RESULTS CULTURE", desc: "An arena of high-impact discipline and focus.", icon: Shield }
+                ].map((item, i) => (
+                  <div key={i} className="flex gap-4 md:gap-6 items-start">
+                    <div className="p-3 md:p-4 bg-finixRed rounded-xl md:rounded-2xl text-white shrink-0">
+                      <item.icon size={20} />
+                    </div>
+                    <div>
+                      <h4 className={`font-bebas text-2xl md:text-3xl tracking-widest mb-1 ${theme === 'dark' ? 'text-white' : 'text-matteBlack'}`}>{item.title}</h4>
+                      <p className={`font-jakarta ${theme === 'dark' ? 'text-white/40' : 'text-matteBlack/50'} text-[10px] md:text-sm uppercase tracking-wider font-bold`}>{item.desc}</p>
+                    </div>
+                  </div>
+                ))}
               </div>
-            </motion.div>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* 2. LEGACY SECTION */}
-      <section className="bg-finixRed py-24 text-white overflow-hidden relative">
-        <div className="absolute top-0 right-0 w-1/2 h-full bg-black/5 -skew-x-12 translate-x-32 hidden lg:block" />
-        <div className="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-12 items-center relative z-10">
-          <motion.div 
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            className="text-center lg:text-left"
-          >
-            <span className="font-syncopate text-[10px] tracking-[0.5em] uppercase opacity-70 mb-4 block">Build Your Dream</span>
-            <h2 className="font-bebas text-6xl md:text-8xl leading-none mb-8">10+ YEARS OF <br />UNDEFEATED SUCCESS</h2>
-            <p className="font-jakarta text-lg mb-10 opacity-90 leading-relaxed max-w-lg mx-auto lg:mx-0">
-              It's the time to cut down your calories by taking a step to reach us. Our legacy is built on thousands of transformations and decade of expertise.
-            </p>
-            <Link to="/contact" className="px-10 py-4 bg-white text-finixRed font-bebas text-xl tracking-widest hover:bg-black hover:text-white transition-all inline-block uppercase">JOIN US</Link>
-          </motion.div>
-          
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-            {[
-              { label: 'Personal Trainings', val: '570+', icon: Target },
-              { label: 'Years Experience', val: '10+', icon: Star },
-              { label: 'Online Sessions', val: '1020+', icon: Video },
-              { label: 'Happy Customers', val: '2000+', icon: Zap }
-            ].map((stat, i) => (
-              <motion.div 
-                key={i}
-                initial={{ opacity: 0, scale: 0.9 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
-                className="bg-white dark:bg-luxuryGray p-8 rounded-2xl flex flex-col items-center justify-center text-center group hover:shadow-2xl transition-all border border-black/5 dark:border-white/5"
-              >
-                <stat.icon className="text-finixRed mb-4 group-hover:scale-110 transition-transform" size={32} />
-                <h3 className="font-bebas text-5xl text-black dark:text-white mb-1">{stat.val}</h3>
-                <p className="font-syncopate text-[8px] text-black/40 dark:text-white/40 uppercase tracking-widest font-bold">{stat.label}</p>
-              </motion.div>
-            ))}
-          </div>
+      {/* 5. TESTIMONIALS */}
+      <section className="py-20 md:py-32 container mx-auto px-4 md:px-6">
+        <div className="text-center mb-12 md:mb-20">
+          <h2 className={`font-bebas text-6xl md:text-9xl uppercase ${theme === 'dark' ? 'text-white' : 'text-matteBlack'}`}>LEGACIES</h2>
+          <div className="w-16 md:w-20 h-1 bg-finixRed mx-auto mt-4" />
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+          {[1, 2, 3].map((_, i) => (
+            <div key={i} className={`p-8 md:p-10 rounded-[1.5rem] md:rounded-[2rem] border ${theme === 'dark' ? 'bg-white/5 border-white/5' : 'bg-black/5 border-black/5'}`}>
+              <div className="flex gap-1 text-finixRed mb-6">
+                {[...Array(5)].map((_, j) => <Star key={j} size={14} fill="currentColor" />)}
+              </div>
+              <p className={`font-jakarta text-base md:text-lg italic mb-8 leading-relaxed ${theme === 'dark' ? 'text-white/70' : 'text-matteBlack/70'}`}>
+                "Finix isn't just a gym; it's where I rebuilt my entire lifestyle. The discipline here is infectious. Down 15kg of fat, up 100% in confidence."
+              </p>
+              <div className="flex items-center gap-4">
+                <div className={`w-10 h-10 md:w-12 md:h-12 rounded-full ${theme === 'dark' ? 'bg-white/10' : 'bg-black/10'}`} />
+                <div>
+                  <h4 className={`font-bebas text-lg md:text-xl tracking-widest uppercase ${theme === 'dark' ? 'text-white' : 'text-matteBlack'}`}>Member {i+1}</h4>
+                  <span className="text-[9px] font-syncopate text-finixRed font-bold uppercase tracking-widest">Client</span>
+                </div>
+              </div>
+            </div>
+          ))}
         </div>
       </section>
 
-      {/* 4. LOCATIONS SECTION */}
-      <section className="py-24 bg-white dark:bg-luxuryBlack px-6 red-mesh">
-        <div className="max-w-7xl mx-auto text-center">
-          <motion.h2 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            className="font-bebas text-6xl md:text-8xl mb-4 text-black dark:text-white uppercase"
-          >
-            WE ARE <span className="text-finixRed">LOCATED IN</span>
-          </motion.h2>
-          <p className="text-black/50 dark:text-white/40 font-jakarta italic mb-16 max-w-2xl mx-auto font-medium">
-            We are here to support you in that first step. We want you to live a fit and healthy lifestyle!
-          </p>
-          
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            {[
-              { name: 'Indiranagar', type: 'Physical Lab', icon: MapPin },
-              { name: 'Online', type: 'Global Training', icon: Video },
-              { name: 'Basavangudi', type: 'Physical Lab', icon: MapPin }
-            ].map((loc, i) => (
-              <motion.div
-                key={i}
-                whileHover={{ y: -10 }}
-                className="bg-white dark:bg-luxuryGray p-12 rounded-[2rem] flex flex-col items-center gap-6 group border border-black/10 dark:border-white/5 hover:border-finixRed dark:hover:border-finixRed transition-all shadow-sm hover:shadow-xl"
-              >
-                <div className="p-6 bg-finixRed/5 rounded-full group-hover:bg-finixRed transition-colors">
-                  <loc.icon className="text-finixRed group-hover:text-white" size={32} />
-                </div>
-                <h3 className="font-bebas text-3xl text-black dark:text-white tracking-widest uppercase">{loc.name}</h3>
-                <p className="font-syncopate text-[9px] text-black/40 dark:text-white/30 tracking-[0.3em] uppercase font-bold">{loc.type}</p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
+      {/* CTA FOOTER */}
+      <section className="py-20 md:py-40 text-center px-4 md:px-6">
+        <h2 className={`font-bebas text-5xl md:text-[10rem] mb-8 md:mb-12 uppercase leading-[0.9] md:leading-[0.8] ${theme === 'dark' ? 'text-white' : 'text-matteBlack'}`}>STOP WAITING. <br /><span className="text-finixRed">START RISING.</span></h2>
+        <Link to="/contact" className="inline-block px-10 md:px-20 py-6 md:py-10 bg-finixRed text-white font-bebas text-3xl md:text-5xl tracking-widest rounded-full hover:scale-105 transition-transform shadow-2xl shadow-finixRed/30">
+          SECURE YOUR SPOT
+        </Link>
       </section>
     </div>
   );

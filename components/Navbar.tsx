@@ -1,12 +1,11 @@
 
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { Menu, X, MessageCircle, Sun, Moon } from 'lucide-react';
 import { motion as m, AnimatePresence } from 'framer-motion';
-import { Menu, X, Phone, Instagram, Youtube, Facebook, Search, Sun, Moon } from 'lucide-react';
-import { useTheme } from '../App';
 import { Logo } from '../constants';
+import { useTheme } from '../App';
 
-// Cast motion to any to bypass environment-specific type checking issues
 const motion = m as any;
 
 const Navbar = () => {
@@ -16,152 +15,161 @@ const Navbar = () => {
   const { theme, toggleTheme } = useTheme();
 
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 40);
-    window.addEventListener('scroll', handleScroll, { passive: true });
+    const handleScroll = () => setScrolled(window.scrollY > 20);
+    window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  useEffect(() => setIsOpen(false), [location.pathname]);
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'auto';
+    }
+  }, [isOpen]);
 
   const navLinks = [
     { name: 'HOME', path: '/' },
     { name: 'ABOUT', path: '/about' },
     { name: 'SERVICES', path: '/programs' },
-    { name: 'CONTACT US', path: '/contact' },
+    { name: 'CONTACT', path: '/contact' },
   ];
 
+  const ThemeToggle = () => (
+    <motion.button
+      whileHover={{ scale: 1.1 }}
+      whileTap={{ scale: 0.9 }}
+      onClick={toggleTheme}
+      className={`p-2 md:p-2.5 rounded-full transition-all duration-300 border flex items-center justify-center ${
+        theme === 'dark' 
+          ? 'bg-white/5 border-white/10 text-white hover:bg-white/10' 
+          : 'bg-black/5 border-black/10 text-black hover:bg-black/10'
+      }`}
+      aria-label="Toggle Theme"
+    >
+      <AnimatePresence mode="wait" initial={false}>
+        <motion.div
+          key={theme}
+          initial={{ y: 5, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          exit={{ y: -5, opacity: 0 }}
+          transition={{ duration: 0.2 }}
+        >
+          {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
+        </motion.div>
+      </AnimatePresence>
+    </motion.button>
+  );
+
   return (
-    <header className="fixed top-0 w-full z-[100]">
-      {/* Top Utility Bar */}
-      <div className={`py-1 hidden md:block border-b transition-colors duration-300 ${scrolled ? 'bg-white dark:bg-luxuryBlack border-black/5 dark:border-white/5' : 'bg-black/20 border-white/10'}`}>
-        <div className="max-w-[1400px] mx-auto px-6 flex justify-between items-center text-[10px] font-jakarta">
-          <div className="flex items-center gap-2">
-            <Phone size={10} className="text-finixRed rotate-90" />
-            <span className={`tracking-widest uppercase font-bold ${scrolled ? 'text-black/60 dark:text-white/60' : 'text-white/80'}`}>
-              MAKE A CALL: <a href="tel:+918217500205" className="hover:text-finixRed">+91 82175 00205</a>
-            </span>
-          </div>
-          <div className={`flex items-center gap-4 ${scrolled ? 'text-black/40 dark:text-white/40' : 'text-white/60'}`}>
-            <Facebook size={12} className="hover:text-finixRed cursor-pointer" />
-            <Youtube size={12} className="hover:text-finixRed cursor-pointer" />
-            <Instagram size={12} className="hover:text-finixRed cursor-pointer" />
-            <Search size={12} className="hover:text-finixRed cursor-pointer" />
-          </div>
-        </div>
-      </div>
+    <>
+      <header className={`fixed top-0 w-full z-[100] transition-all duration-500 ${
+        scrolled 
+          ? 'bg-white/95 dark:bg-matteBlack/90 backdrop-blur-md py-3 md:py-4 shadow-xl' 
+          : 'bg-transparent py-5 md:py-8'
+      }`}>
+        <nav className="container mx-auto px-4 md:px-6 flex justify-between items-center">
+          <Link to="/" onClick={() => setIsOpen(false)}>
+            <Logo theme={theme} className="scale-75 sm:scale-90 md:scale-110 origin-left" />
+          </Link>
 
-      {/* Main Navbar */}
-      <nav 
-        className={`transition-all duration-300 ${
-          scrolled 
-            ? 'py-2.5 bg-white/95 dark:bg-luxuryBlack/95 backdrop-blur-md shadow-sm' 
-            : 'py-5 bg-transparent'
-        }`}
-      >
-        <div className="max-w-[1400px] mx-auto px-6 flex justify-between items-center">
-          {/* Logo Section */}
-          <div className="flex items-center">
-            <Link to="/" className="hover:opacity-90 transition-opacity">
-              <Logo className="scale-[0.95] lg:scale-100 origin-left" theme={theme} />
-            </Link>
+          {/* Desktop */}
+          <div className="hidden lg:flex items-center gap-8 xl:gap-12">
+            <div className="flex gap-8 xl:gap-10">
+              {navLinks.map((link) => (
+                <Link
+                  key={link.name}
+                  to={link.path}
+                  className={`font-syncopate text-[9px] font-bold tracking-[0.2em] transition-all relative ${
+                    location.pathname === link.path 
+                      ? 'text-finixRed' 
+                      : (theme === 'dark' ? 'text-white/70 hover:text-white' : 'text-black/70 hover:text-black')
+                  }`}
+                >
+                  {link.name}
+                </Link>
+              ))}
+            </div>
+            
+            <div className="flex items-center gap-6 pl-8 border-l border-black/10 dark:border-white/10">
+              <ThemeToggle />
+              <Link to="/contact" className="px-8 py-3 bg-finixRed text-white font-bebas text-2xl tracking-widest rounded-full hover:bg-black dark:hover:bg-white dark:hover:text-black transition-all shadow-xl shadow-finixRed/20">
+                JOIN NOW
+              </Link>
+            </div>
           </div>
 
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center gap-6 lg:gap-10">
-            <div className="flex gap-8 lg:gap-10">
-              {navLinks.map((link) => {
-                const isActive = location.pathname === link.path;
-                return (
-                  <Link
-                    key={link.name}
-                    to={link.path}
-                    className={`font-jakarta text-[11px] font-bold tracking-[0.1em] transition-all relative group py-2 ${
-                      isActive 
-                        ? 'text-finixRed' 
-                        : (scrolled ? 'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white' : (theme === 'light' ? 'text-black/70 hover:text-black' : 'text-white/70 hover:text-white'))
+          {/* Mobile Toggle */}
+          <div className="flex lg:hidden items-center gap-3">
+            <ThemeToggle />
+            <button 
+              className={`p-2 rounded-lg transition-colors ${theme === 'dark' ? 'bg-white/5 text-white' : 'bg-black/5 text-black'}`} 
+              onClick={() => setIsOpen(!isOpen)}
+              aria-label="Toggle Menu"
+            >
+              {isOpen ? <X size={24} /> : <Menu size={24} />}
+            </button>
+          </div>
+        </nav>
+
+        {/* Mobile Menu */}
+        <AnimatePresence>
+          {isOpen && (
+            <motion.div 
+              initial={{ opacity: 0, x: '100%' }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: '100%' }}
+              transition={{ type: 'spring', damping: 25, stiffness: 200 }}
+              className={`fixed inset-0 h-screen z-[120] flex flex-col p-6 md:p-10 ${
+                theme === 'dark' ? 'bg-matteBlack' : 'bg-white'
+              }`}
+            >
+              <div className="flex justify-between items-center mb-12">
+                <Logo theme={theme} className="scale-90" />
+                <button 
+                  className={`${theme === 'dark' ? 'text-white' : 'text-black'}`} 
+                  onClick={() => setIsOpen(false)}
+                >
+                  <X size={32} />
+                </button>
+              </div>
+              <div className="flex flex-col gap-8 mt-4">
+                {navLinks.map((link) => (
+                  <Link 
+                    key={link.name} 
+                    to={link.path} 
+                    onClick={() => setIsOpen(false)} 
+                    className={`font-bebas text-5xl md:text-7xl hover:text-finixRed tracking-tighter uppercase transition-colors ${
+                      theme === 'dark' ? 'text-white' : 'text-black'
                     }`}
                   >
                     {link.name}
-                    {isActive && (
-                      <motion.span 
-                        layoutId="navUnderline"
-                        className="absolute bottom-0 left-0 h-[2px] bg-finixRed w-full"
-                      />
-                    )}
                   </Link>
-                );
-              })}
-            </div>
-            
-            <div className="flex items-center gap-6 border-l border-black/10 dark:border-white/10 pl-8">
-              {/* Theme Toggle Button */}
-              <button 
-                onClick={toggleTheme}
-                className={`p-2 rounded-full border transition-all ${scrolled ? 'border-black/5 dark:border-white/10 text-black dark:text-white hover:bg-black/5 dark:hover:bg-white/5' : (theme === 'light' ? 'border-black/10 text-black hover:bg-black/5' : 'border-white/10 text-white hover:bg-white/10')}`}
-                aria-label="Toggle Theme"
-              >
-                <AnimatePresence mode="wait">
-                  <motion.div
-                    key={theme}
-                    initial={{ opacity: 0, rotate: -90, scale: 0.5 }}
-                    animate={{ opacity: 1, rotate: 0, scale: 1 }}
-                    exit={{ opacity: 0, rotate: 90, scale: 0.5 }}
-                    transition={{ duration: 0.2 }}
-                  >
-                    {theme === 'light' ? <Moon size={18} /> : <Sun size={18} />}
-                  </motion.div>
-                </AnimatePresence>
-              </button>
+                ))}
+              </div>
+              <div className="mt-auto pb-10">
+                <Link to="/contact" onClick={() => setIsOpen(false)} className="block w-full py-5 bg-finixRed text-white font-bebas text-3xl text-center rounded-full shadow-lg shadow-finixRed/20">
+                  JOIN THE ARENA
+                </Link>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </header>
 
-              <Link to="/contact" className="px-8 lg:px-10 py-3 bg-finixRed text-white font-bebas text-xl tracking-widest rounded-sm hover:brightness-110 transition-all uppercase shadow-lg shadow-finixRed/20">
-                ENQUIRE
-              </Link>
-            </div>
-          </div>
-
-          <div className="flex items-center gap-4 md:hidden">
-            <button 
-              onClick={toggleTheme}
-              className={`p-2 rounded-full ${scrolled ? 'text-black dark:text-white' : (theme === 'light' ? 'text-black' : 'text-white')}`}
-            >
-              {theme === 'light' ? <Moon size={22} /> : <Sun size={22} />}
-            </button>
-            <button onClick={() => setIsOpen(!isOpen)} className={`p-2 ${scrolled ? 'text-black dark:text-white' : (theme === 'light' ? 'text-black' : 'text-white')}`}>
-              {isOpen ? <X size={28} /> : <Menu size={28} />}
-            </button>
-          </div>
-        </div>
-      </nav>
-
-      <AnimatePresence>
-        {isOpen && (
-          <motion.div
-            initial={{ opacity: 0, x: '100%' }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: '100%' }}
-            className="fixed inset-0 h-screen w-full bg-white dark:bg-luxuryBlack z-[120] flex flex-col justify-center items-center gap-10 p-6"
-          >
-            <button onClick={() => setIsOpen(false)} className="absolute top-10 right-10 text-black dark:text-white"><X size={32}/></button>
-            {navLinks.map((link) => (
-              <Link
-                key={link.name}
-                to={link.path}
-                className="font-bebas text-6xl text-black dark:text-white hover:text-finixRed transition-colors uppercase"
-              >
-                {link.name}
-              </Link>
-            ))}
-            <button 
-              onClick={toggleTheme}
-              className="mt-8 px-12 py-5 border-2 border-finixRed text-finixRed font-bebas text-2xl tracking-widest rounded-full flex items-center gap-4 uppercase"
-            >
-              {theme === 'light' ? 'Dark Mode' : 'Light Mode'}
-              {theme === 'light' ? <Moon size={24} /> : <Sun size={24} />}
-            </button>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </header>
+      {/* Floating WhatsApp Lead Gen */}
+      <a 
+        href="https://wa.me/918217500205" 
+        target="_blank" 
+        rel="noreferrer"
+        className="fixed bottom-6 right-6 md:bottom-10 md:right-10 z-[150] bg-[#25D366] text-white p-3 md:p-4 rounded-full shadow-2xl hover:scale-110 transition-transform flex items-center gap-3 group"
+      >
+        <span className="max-w-0 overflow-hidden group-hover:max-w-xs transition-all duration-300 font-jakarta text-[8px] md:text-[10px] uppercase font-black tracking-widest whitespace-nowrap">
+          Chat with a Coach
+        </span>
+        <MessageCircle size={24} className="md:size-7" />
+      </a>
+    </>
   );
 };
 

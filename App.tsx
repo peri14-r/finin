@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState, createContext, useContext } from 'react';
 import { HashRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { AnimatePresence, motion as m } from 'framer-motion';
@@ -63,14 +64,13 @@ const AnimatedRoutes = () => {
 };
 
 export default function App() {
-  const [theme, setTheme] = useState<Theme>('light');
+  const [theme, setTheme] = useState<Theme>('dark'); // Default to dark for elite branding
 
   useEffect(() => {
     const savedTheme = localStorage.getItem('theme') as Theme;
-    if (savedTheme) {
-      setTheme(savedTheme);
-      document.documentElement.classList.toggle('dark', savedTheme === 'dark');
-    }
+    const initialTheme = savedTheme || 'dark';
+    setTheme(initialTheme);
+    document.documentElement.classList.toggle('dark', initialTheme === 'dark');
   }, []);
 
   const toggleTheme = () => {
@@ -84,7 +84,9 @@ export default function App() {
     <ThemeContext.Provider value={{ theme, toggleTheme }}>
       <Router>
         <ScrollToTop />
-        <div className={`min-h-screen flex flex-col transition-colors duration-500 bg-white dark:bg-luxuryBlack text-luxuryBlack dark:text-white`}>
+        <div className={`min-h-screen flex flex-col transition-colors duration-500 
+          ${theme === 'dark' ? 'bg-matteBlack text-white' : 'bg-white text-matteBlack'}
+        `}>
           <Navbar />
           <main className="flex-grow">
             <AnimatedRoutes />

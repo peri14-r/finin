@@ -1,192 +1,91 @@
 
-import React, { useState } from 'react';
+import React from 'react';
 import { motion as m } from 'framer-motion';
-import { Mail, Phone, MapPin, Clock, Send, Facebook, Instagram, Youtube, Target } from 'lucide-react';
+import { Send, MapPin, Phone, Clock } from 'lucide-react';
+import { useTheme } from '../App';
 
-// Cast motion to any to bypass environment-specific type checking issues
 const motion = m as any;
 
 const Contact = () => {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    message: ''
-  });
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    alert("Inquiry Sent! Our team will contact you shortly.");
-  };
+  const { theme } = useTheme();
 
   return (
-    <div className="bg-white dark:bg-luxuryBlack min-h-screen pt-40 pb-32 px-6 overflow-hidden">
-      <div className="max-w-7xl mx-auto">
-        <header className="text-center mb-24 relative">
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] bg-finixRed/5 blur-[100px] rounded-full -z-10" />
-          <motion.h1
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="font-bebas text-8xl md:text-[10rem] text-black dark:text-white uppercase leading-none"
-          >
-            ENTER THE <span className="text-finixRed">ARCH</span>
-          </motion.h1>
-          <p className="font-syncopate text-black/40 dark:text-white/20 text-[10px] tracking-[0.5em] uppercase mt-4 font-bold">Connect with elite performance</p>
-        </header>
+    <div className={`min-h-screen pt-32 md:pt-40 pb-20 md:pb-32 transition-colors duration-500 ${theme === 'dark' ? 'bg-matteBlack text-white' : 'bg-white text-matteBlack'}`}>
+      <div className="container mx-auto px-4 md:px-6 max-w-7xl">
+        <div className="grid lg:grid-cols-2 gap-16 md:gap-24 items-center">
+          {/* Left: Branding & Info */}
+          <div>
+            <span className="font-syncopate text-finixRed text-[10px] tracking-[0.4em] md:tracking-[0.5em] uppercase font-bold mb-4 md:mb-6 block">Ready for Ascent</span>
+            <h1 className={`font-bebas text-6xl md:text-[10rem] leading-[0.9] md:leading-[0.85] mb-8 md:mb-12 uppercase font-black ${theme === 'dark' ? 'text-white' : 'text-matteBlack'}`}>
+              JOIN THE <br /><span className="text-finixRed">ARCH</span>
+            </h1>
+            
+            <div className="grid gap-6 md:gap-10">
+              {[
+                { icon: MapPin, title: 'The Arena', info: 'Indiranagar, Bangalore' },
+                { icon: Phone, title: 'Hotline', info: '+91 82175 00205' },
+                { icon: Clock, title: 'Hours', info: 'MON-SUN: 05:00 - 22:00' }
+              ].map((item, idx) => (
+                <div key={idx} className="flex gap-4 md:gap-6 items-center">
+                  <div className={`p-3 md:p-4 rounded-xl md:rounded-2xl text-finixRed shrink-0 ${theme === 'dark' ? 'bg-white/5' : 'bg-black/5'}`}>
+                    <item.icon size={20} />
+                  </div>
+                  <div>
+                    <h4 className={`font-bebas text-xl md:text-2xl tracking-widest uppercase ${theme === 'dark' ? 'text-white' : 'text-matteBlack'}`}>{item.title}</h4>
+                    <p className={`font-jakarta text-[10px] md:text-sm uppercase tracking-wider font-bold ${theme === 'dark' ? 'text-white/40' : 'text-matteBlack/50'}`}>{item.info}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
 
-        <div className="grid lg:grid-cols-2 gap-24">
-          {/* CONTACT FORM */}
-          <motion.div
-            initial={{ opacity: 0, x: -50 }}
+          {/* Right: Lead Form */}
+          <motion.div 
+            initial={{ opacity: 0, x: 20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            className="space-y-12 bg-softWhite dark:bg-luxuryGray p-12 rounded-[3rem] shadow-sm border border-black/10 dark:border-white/5"
+            className={`p-6 md:p-12 rounded-[2rem] md:rounded-[3rem] border transition-colors ${
+              theme === 'dark' ? 'bg-charcoal border-white/5' : 'bg-gray-50 border-black/10'
+            }`}
           >
-            <form onSubmit={handleSubmit} className="space-y-10">
-              <div className="relative group">
-                <input
-                  type="text"
-                  name="name"
-                  placeholder=" "
-                  value={formData.name}
-                  onChange={handleChange}
-                  required
-                  className="w-full bg-transparent border-b-2 border-black/20 dark:border-white/10 py-4 font-jakarta text-xl transition-all focus:border-finixRed dark:focus:border-finixRed outline-none peer text-black dark:text-white font-semibold"
+            <h3 className={`font-bebas text-4xl md:text-5xl mb-8 md:mb-12 uppercase tracking-widest ${theme === 'dark' ? 'text-white' : 'text-matteBlack'}`}>ENLIST NOW</h3>
+            <form className="space-y-6 md:space-y-8" onSubmit={(e) => { e.preventDefault(); alert('Lead Captured. Welcome to the Tribe.'); }}>
+              <div className="space-y-3 md:space-y-4">
+                <label className={`font-syncopate text-[7px] md:text-[8px] tracking-widest uppercase font-bold ${theme === 'dark' ? 'text-white/30' : 'text-matteBlack/40'}`}>Identity</label>
+                <input 
+                  type="text" 
+                  placeholder="FULL NAME" 
+                  className={`w-full bg-transparent border-b p-3 md:p-4 font-bebas text-xl md:text-2xl tracking-widest focus:border-finixRed outline-none transition-colors ${
+                    theme === 'dark' ? 'border-white/10 text-white placeholder-white/20' : 'border-black/10 text-matteBlack placeholder-black/20'
+                  }`} 
+                  required 
                 />
-                <label className="absolute left-0 top-4 text-black/50 dark:text-white/30 transition-all peer-focus:-top-4 peer-focus:text-xs peer-focus:text-finixRed peer-[:not(:placeholder-shown)]:-top-4 peer-[:not(:placeholder-shown)]:text-xs uppercase tracking-widest font-syncopate font-bold">
-                  Your Name
-                </label>
-                <div className="absolute bottom-0 left-0 h-[2px] w-0 bg-finixRed transition-all duration-500 group-focus-within:w-full shadow-[0_5px_15px_rgba(255,0,0,0.2)]" />
               </div>
-
-              <div className="relative group">
-                <input
-                  type="email"
-                  name="email"
-                  placeholder=" "
-                  value={formData.email}
-                  onChange={handleChange}
-                  required
-                  className="w-full bg-transparent border-b-2 border-black/20 dark:border-white/10 py-4 font-jakarta text-xl transition-all focus:border-finixRed dark:focus:border-finixRed outline-none peer text-black dark:text-white font-semibold"
+              <div className="space-y-3 md:space-y-4">
+                <label className={`font-syncopate text-[7px] md:text-[8px] tracking-widest uppercase font-bold ${theme === 'dark' ? 'text-white/30' : 'text-matteBlack/40'}`}>Comm-Link</label>
+                <input 
+                  type="email" 
+                  placeholder="EMAIL ADDRESS" 
+                  className={`w-full bg-transparent border-b p-3 md:p-4 font-bebas text-xl md:text-2xl tracking-widest focus:border-finixRed outline-none transition-colors ${
+                    theme === 'dark' ? 'border-white/10 text-white placeholder-white/20' : 'border-black/10 text-matteBlack placeholder-black/20'
+                  }`} 
+                  required 
                 />
-                <label className="absolute left-0 top-4 text-black/50 dark:text-white/30 transition-all peer-focus:-top-4 peer-focus:text-xs peer-focus:text-finixRed peer-[:not(:placeholder-shown)]:-top-4 peer-[:not(:placeholder-shown)]:text-xs uppercase tracking-widest font-syncopate font-bold">
-                  Email Address
-                </label>
-                <div className="absolute bottom-0 left-0 h-[2px] w-0 bg-finixRed transition-all duration-500 group-focus-within:w-full shadow-[0_5px_15px_rgba(255,0,0,0.2)]" />
               </div>
-
-              <div className="relative group">
-                <input
-                  type="tel"
-                  name="phone"
-                  placeholder=" "
-                  value={formData.phone}
-                  onChange={handleChange}
-                  className="w-full bg-transparent border-b-2 border-black/20 dark:border-white/10 py-4 font-jakarta text-xl transition-all focus:border-finixRed dark:focus:border-finixRed outline-none peer text-black dark:text-white font-semibold"
-                />
-                <label className="absolute left-0 top-4 text-black/50 dark:text-white/30 transition-all peer-focus:-top-4 peer-focus:text-xs peer-focus:text-finixRed peer-[:not(:placeholder-shown)]:-top-4 peer-[:not(:placeholder-shown)]:text-xs uppercase tracking-widest font-syncopate font-bold">
-                  Phone Number
-                </label>
-                <div className="absolute bottom-0 left-0 h-[2px] w-0 bg-finixRed transition-all duration-500 group-focus-within:w-full shadow-[0_5px_15px_rgba(255,0,0,0.2)]" />
+              <div className="space-y-3 md:space-y-4">
+                <label className={`font-syncopate text-[7px] md:text-[8px] tracking-widest uppercase font-bold ${theme === 'dark' ? 'text-white/30' : 'text-matteBlack/40'}`}>Protocol Interests</label>
+                <select className={`w-full bg-transparent border-b p-3 md:p-4 font-bebas text-xl md:text-2xl tracking-widest focus:border-finixRed outline-none transition-colors uppercase ${
+                  theme === 'dark' ? 'border-white/10 text-white' : 'border-black/10 text-matteBlack'
+                }`}>
+                  <option className="bg-matteBlack text-white">STRENGTH TRAINING</option>
+                  <option className="bg-matteBlack text-white">WEIGHT LOSS</option>
+                  <option className="bg-matteBlack text-white">PERSONAL COACHING</option>
+                </select>
               </div>
-
-              <div className="relative group">
-                <textarea
-                  name="message"
-                  placeholder=" "
-                  value={formData.message}
-                  onChange={handleChange}
-                  rows={4}
-                  className="w-full bg-transparent border-b-2 border-black/20 dark:border-white/10 py-4 font-jakarta text-xl transition-all focus:border-finixRed dark:focus:border-finixRed outline-none peer resize-none text-black dark:text-white font-semibold"
-                />
-                <label className="absolute left-0 top-4 text-black/50 dark:text-white/30 transition-all peer-focus:-top-4 peer-focus:text-xs peer-focus:text-finixRed peer-[:not(:placeholder-shown)]:-top-4 peer-[:not(:placeholder-shown)]:text-xs uppercase tracking-widest font-syncopate font-bold">
-                  How can we help?
-                </label>
-                <div className="absolute bottom-0 left-0 h-[2px] w-0 bg-finixRed transition-all duration-500 group-focus-within:w-full shadow-[0_5px_15px_rgba(255,0,0,0.2)]" />
-              </div>
-
-              <button
-                type="submit"
-                className="w-full py-6 bg-finixRed text-white font-bebas text-3xl tracking-[0.3em] hover:bg-black transition-all duration-500 rounded-full flex items-center justify-center gap-4 group uppercase shadow-lg shadow-finixRed/20"
-              >
-                Submit Inquiry <Send className="group-hover:translate-x-2 group-hover:-translate-y-2 transition-transform" />
+              <button className="w-full py-5 md:py-6 bg-finixRed text-white font-bebas text-3xl md:text-4xl tracking-widest rounded-full hover:bg-black dark:hover:bg-white dark:hover:text-black transition-all flex items-center justify-center gap-4 shadow-xl shadow-finixRed/20">
+                SEND PROTOCOL <Send size={20} className="md:size-6" />
               </button>
             </form>
-          </motion.div>
-
-          {/* CONTACT INFO SIDEBAR */}
-          <motion.div
-            initial={{ opacity: 0, x: 50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            className="space-y-12"
-          >
-            <div className="bg-finixRed p-12 rounded-[3rem] space-y-10 relative overflow-hidden shadow-2xl">
-              <div className="absolute top-0 right-0 p-8 opacity-10 text-white rotate-12">
-                <Target size={200} />
-              </div>
-              
-              <div className="space-y-10 relative z-10 text-white">
-                <div className="flex items-start gap-6 group">
-                  <div className="p-4 bg-white/20 rounded-2xl group-hover:bg-white group-hover:text-finixRed transition-all">
-                    <MapPin size={28} />
-                  </div>
-                  <div>
-                    <h4 className="font-syncopate text-[10px] text-white/60 tracking-widest mb-2 uppercase font-bold">Our Base</h4>
-                    <p className="text-2xl font-bebas text-white tracking-widest uppercase">Indiranagar & Basavangudi, Bangalore</p>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-6 group">
-                  <div className="p-4 bg-white/20 rounded-2xl group-hover:bg-white group-hover:text-finixRed transition-all">
-                    <Phone size={28} />
-                  </div>
-                  <div>
-                    <h4 className="font-syncopate text-[10px] text-white/60 tracking-widest mb-2 uppercase font-bold">Hotline</h4>
-                    <a href="tel:+918217500205" className="text-2xl font-bebas text-white hover:text-luxuryBlack transition-colors tracking-widest underline underline-offset-4 decoration-white/20">+91 82175 00205</a>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-6 group">
-                  <div className="p-4 bg-white/20 rounded-2xl group-hover:bg-white group-hover:text-finixRed transition-all">
-                    <Mail size={28} />
-                  </div>
-                  <div>
-                    <h4 className="font-syncopate text-[10px] text-white/60 tracking-widest mb-2 uppercase font-bold">Email</h4>
-                    <a href="mailto:info@finixfitness.com" className="text-2xl font-bebas text-white hover:text-luxuryBlack transition-colors tracking-widest underline underline-offset-4 decoration-white/20">info@finixfitness.com</a>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-6 group">
-                  <div className="p-4 bg-white/20 rounded-2xl group-hover:bg-white group-hover:text-finixRed transition-all">
-                    <Clock size={28} />
-                  </div>
-                  <div>
-                    <h4 className="font-syncopate text-[10px] text-white/60 tracking-widest mb-2 uppercase font-bold">Operating Hours</h4>
-                    <p className="text-2xl font-bebas text-white tracking-widest uppercase">Mon-Sun: 5:00 AM - 10:00 PM</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="grid grid-cols-2 gap-4">
-              <div className="h-48 rounded-[2rem] overflow-hidden bg-softWhite dark:bg-luxuryGray group cursor-pointer relative border border-black/10 dark:border-white/5 hover:border-finixRed transition-all shadow-sm">
-                <img src="https://images.unsplash.com/photo-1593079831268-3381b0db4a77?auto=format&fit=crop&q=80&w=400" className="w-full h-full object-cover grayscale opacity-30 dark:opacity-20 group-hover:opacity-60 dark:group-hover:opacity-40 transition-all" alt="Indiranagar" />
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <span className="font-bebas text-xl text-black dark:text-white tracking-widest group-hover:text-finixRed transition-colors">INDIRANAGAR</span>
-                </div>
-              </div>
-              <div className="h-48 rounded-[2rem] overflow-hidden bg-softWhite dark:bg-luxuryGray group cursor-pointer relative border border-black/10 dark:border-white/5 hover:border-finixRed transition-all shadow-sm">
-                <img src="https://images.unsplash.com/photo-1541534741688-6078c6bfb5c5?auto=format&fit=crop&q=80&w=400" className="w-full h-full object-cover grayscale opacity-30 dark:opacity-20 group-hover:opacity-60 dark:group-hover:opacity-40 transition-all" alt="Basavangudi" />
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <span className="font-bebas text-xl text-black dark:text-white tracking-widest group-hover:text-finixRed transition-colors">BASAVANGUDI</span>
-                </div>
-              </div>
-            </div>
           </motion.div>
         </div>
       </div>

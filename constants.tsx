@@ -3,37 +3,31 @@ import React from 'react';
 import { TeamMember, Program } from './types';
 
 export const Logo = ({ className = "w-auto h-12", theme = "dark" }: { className?: string, theme?: 'light' | 'dark' }) => {
-  const accentColor = '#ff0000'; 
+  const logoUrl = "https://res.cloudinary.com/dbgurk9kg/image/upload/v1768221269/1-1-300x231_lnlav2.jpg";
 
   return (
-    <div className={`flex items-center gap-3 ${className} transition-colors duration-500 ${theme === 'dark' ? 'text-white' : 'text-luxuryBlack'}`}>
-      <div className="relative w-12 h-12 shrink-0">
-        <svg viewBox="0 0 100 100" className="w-full h-full" fill="none" xmlns="http://www.w3.org/2000/svg">
-          {/* Minimalist Professional Shield */}
-          <path 
-            d="M50 90 C50 90 15 75 15 45 V25 L50 10 L85 25 V45 C85 75 50 90 50 90Z" 
-            stroke={accentColor} 
-            strokeWidth="5" 
-            strokeLinejoin="round"
-          />
-          
-          {/* Dynamic "F" and barbell hybrid icon */}
-          <rect x="35" y="30" width="30" height="4" fill="currentColor" rx="1" />
-          <rect x="35" y="45" width="20" height="4" fill="currentColor" rx="1" />
-          <rect x="35" y="30" width="6" height="40" fill="currentColor" rx="1" />
-          
-          {/* Barbell ends */}
-          <rect x="30" y="65" width="16" height="6" fill="currentColor" rx="1" />
-          <rect x="54" y="65" width="16" height="6" fill="currentColor" rx="1" />
-          <line x1="46" y1="68" x2="54" y2="68" stroke="currentColor" strokeWidth="2" />
-        </svg>
+    <div className={`flex items-center gap-3 ${className} transition-all duration-500`}>
+      <div className="relative overflow-hidden rounded-lg">
+        <img 
+          src={logoUrl} 
+          alt="FINIX FITNESS" 
+          className={`h-10 w-auto lg:h-12 object-contain transition-all duration-500 ${
+            theme === 'dark' 
+              ? 'brightness-110 contrast-110 shadow-[0_0_15px_rgba(255,255,255,0.1)]' 
+              : 'brightness-100 contrast-125'
+          }`}
+        />
       </div>
-      <div className="flex flex-col leading-[1.1] pt-1">
+      <div className="flex flex-col leading-[1] pt-0.5 text-left">
         <div className="flex items-baseline gap-1">
-          <span className="font-bebas text-3xl tracking-tight uppercase">FINIX</span>
-          <span className="font-bebas text-3xl tracking-tight uppercase text-finixRed">FITNESS</span>
+          <span className={`font-bebas text-2xl lg:text-3xl tracking-tighter uppercase transition-colors duration-500 ${
+            theme === 'dark' ? 'text-white' : 'text-matteBlack'
+          }`}>FINIX</span>
+          <span className="font-bebas text-2xl lg:text-3xl tracking-tighter uppercase text-finixRed">FITNESS</span>
         </div>
-        <span className="text-[8px] font-syncopate tracking-[0.3em] opacity-60 uppercase font-bold">BUILD WITH FINIX</span>
+        <span className={`text-[7px] lg:text-[8px] font-syncopate tracking-[0.4em] uppercase font-bold transition-opacity duration-500 ${
+          theme === 'dark' ? 'opacity-50 text-white' : 'opacity-60 text-matteBlack'
+        }`}>EST. 2014</span>
       </div>
     </div>
   );
@@ -43,22 +37,22 @@ export const TEAM_MEMBERS: TeamMember[] = [
   {
     id: 1,
     name: "Yashpal",
-    title: "Founder & Head Coach",
-    bio: "Pioneering the landscape of elite fitness for over 15 years. Yashpal blends architectural precision with physiological excellence.",
+    title: "Chief Performance Architect",
+    bio: "Pioneering the landscape of elite fitness for over 15 years. Specialized in high-performance metabolic conditioning.",
     image: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&q=80&w=800"
   },
   {
     id: 2,
     name: "Aruna",
-    title: "Co-Founder & Nutrition Director",
-    bio: "Architecting sustainable health systems for corporate leadership and high-impact lifestyles.",
+    title: "Nutritional Strategy Director",
+    bio: "Optimizing physiological output through data-driven nutritional protocols for high-impact executives.",
     image: "https://images.unsplash.com/photo-1548690312-e3b507d8c110?auto=format&fit=crop&q=80&w=800"
   },
   {
     id: 3,
     name: "Chetan",
-    title: "Strength & Conditioning Specialist",
-    bio: "Specializing in advanced hypertrophy and body recomposition protocols for the modern athlete.",
+    title: "Elite Strength Coach",
+    bio: "Focused on bio-mechanical efficiency and advanced hypertrophy for competitive performance.",
     image: "https://images.unsplash.com/photo-1567013127542-490d757e51fe?auto=format&fit=crop&q=80&w=800"
   }
 ];
@@ -66,38 +60,20 @@ export const TEAM_MEMBERS: TeamMember[] = [
 export const PROGRAMS: Program[] = [
   {
     id: 'aerobics',
-    name: 'Aerobics',
-    description: 'Coordinated movement sessions focused on oxygen efficiency and fluid agility.',
-    benefits: ['Flexibility', 'Coordination', 'Fun'],
+    name: 'Aerobics Lab',
+    description: 'Dynamic oxygen-efficiency training utilizing rhythmic movement for peak cardiovascular output.',
+    benefits: ['Endurance', 'Flexibility', 'V02 Max'],
     duration: '60 mins',
-    intensity: 'Medium',
-    image: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&fit=crop&q=80&w=800'
+    intensity: 'High',
+    image: 'https://images.unsplash.com/photo-1518611012118-2960520ee4ea?auto=format&fit=crop&q=80&w=800'
   },
   {
     id: 'hiit',
-    name: 'High Intensity HIIT',
-    description: 'The gold standard for force production and post-exercise oxygen consumption.',
-    benefits: ['Muscle Gain', 'Fat Burn', 'Efficiency'],
-    duration: '30 mins',
-    intensity: 'Maximum',
-    image: 'https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&q=80&w=800'
-  },
-  {
-    id: 'dance',
-    name: 'Dance',
-    description: 'Rhythmic movement and choreographed sessions for cardiovascular health and expression.',
-    benefits: ['Rhythm', 'Weight Loss', 'Agility'],
-    duration: '60 mins',
-    intensity: 'Medium',
-    image: 'https://images.unsplash.com/photo-1524594152303-9fd13543fe6e?auto=format&fit=crop&q=80&w=800'
-  },
-  {
-    id: 'kickboxing',
-    name: 'Kick-boxing',
-    description: 'Martial arts inspired high-energy workout that improves strength and stamina.',
-    benefits: ['Self-Defense', 'Conditioning', 'Power'],
+    name: 'Metabolic HIIT',
+    description: 'Scientifically sequenced intervals designed to maximize post-exercise caloric expenditure.',
+    benefits: ['Fat Incineration', 'Power', 'Focus'],
     duration: '45 mins',
-    intensity: 'High',
-    image: 'https://images.unsplash.com/photo-1511886929837-354d827aae26?auto=format&fit=crop&q=80&w=800'
+    intensity: 'Extreme',
+    image: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&q=80&w=800'
   }
 ];
