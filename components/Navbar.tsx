@@ -157,17 +157,18 @@ const Navbar = () => {
         </AnimatePresence>
       </header>
 
-      {/* Floating WhatsApp Lead Gen */}
+      {/* Floating WhatsApp Lead Gen - Fixed for mobile visibility */}
       <a 
         href="https://wa.me/918217500205" 
         target="_blank" 
         rel="noreferrer"
-        className="fixed bottom-6 right-6 md:bottom-10 md:right-10 z-[150] bg-[#25D366] text-white p-3 md:p-4 rounded-full shadow-2xl hover:scale-110 transition-transform flex items-center gap-3 group"
+        className="fixed bottom-8 right-6 md:bottom-10 md:right-10 z-[200] bg-[#25D366] text-white p-4 md:p-5 rounded-full shadow-[0_10px_40px_rgba(37,211,102,0.4)] hover:scale-110 active:scale-95 transition-all flex items-center gap-3 group"
+        style={{ WebkitTapHighlightColor: 'transparent' }}
       >
-        <span className="max-w-0 overflow-hidden group-hover:max-w-xs transition-all duration-300 font-jakarta text-[8px] md:text-[10px] uppercase font-black tracking-widest whitespace-nowrap">
+        <span className="hidden md:block max-w-0 overflow-hidden group-hover:max-w-xs transition-all duration-300 font-jakarta text-[10px] uppercase font-black tracking-widest whitespace-nowrap">
           Chat with a Coach
         </span>
-        <MessageCircle size={24} className="md:size-7" />
+        <MessageCircle size={28} className="md:size-8" />
       </a>
     </>
   );
